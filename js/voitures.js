@@ -12,12 +12,13 @@ const prix_jour = document.querySelector("#prix-jour");
 const statut = document.querySelector("#statut");
 const annuler_modification = document.querySelector("#annuler-modification");
 const liste_voitures = document.querySelector("#liste-voitures");
+const etat_vide = document.querySelector("#etat-vide");
 
-let count = voitures.length + 1;
-afficher();
 if(localStorage.getItem("voitures"))
     voitures = JSON.parse(localStorage.getItem("voitures"));
 localStorage.setItem("voitures",JSON.stringify(voitures));
+let count = voitures.length + 1;
+afficher();
 
 form.addEventListener("submit",(event) =>{
     event.preventDefault();
@@ -37,7 +38,13 @@ form.addEventListener("submit",(event) =>{
 })
 
 function afficher(){
-    liste_voitures.replaceChildren()
+    liste_voitures.replaceChildren();
+    if(voitures.length === 0){
+        etat_vide.hidden = false;
+        return;
+    }
+    else
+        etat_vide.hidden = true;
     voitures.forEach(voiture => {
         const tr = document.createElement("tr");
         const td_marque = document.createElement("td");
@@ -92,6 +99,13 @@ function afficher(){
         supprimer.dataset.id = voiture.id;
         supprimer.setAttribute("aria-label",`Supprimer ${voiture.marque} ${voiture.modele}, ${voiture.immatriculation}`);
         supprimer.textContent = "Supprimer";
+        supprimer.addEventListener("click",() =>{
+            voitures = voitures.filter(vv => vv.id != voiture.id);
+            if(voitures.length === 0)
+                count = 1;
+            localStorage.setItem("voitures",JSON.stringify(voitures));
+            afficher();
+        })
 
         div_actions.append(modifier,supprimer);
         td_actions.appendChild(div_actions);
