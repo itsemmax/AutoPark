@@ -1,8 +1,7 @@
 import { voituresInitiales } from "./data.js";
 
-let voitures = voituresInitiales.map((voiture) => {
-    return { ...voiture };
-});
+let voitures = structuredClone(voituresInitiales);
+
 const form = document.querySelector("#formulaire-voiture");
 const marque = document.querySelector("#marque");
 const modele = document.querySelector("#modele");
@@ -13,30 +12,130 @@ const statut = document.querySelector("#statut");
 const annuler_modification = document.querySelector("#annuler-modification");
 const liste_voitures = document.querySelector("#liste-voitures");
 const etat_vide = document.querySelector("#etat-vide");
+const erreur_marque = document.querySelector("#erreur-marque");
+const erreur_modele = document.querySelector("#erreur-modele");
+const erreur_immatriculation = document.querySelector("#erreur-immatriculation");
+const erreur_categorie = document.querySelector("#erreur-categorie");
+const erreur_prix = document.querySelector("#erreur-prix-jour");
+const erreur_statut = document.querySelector("#erreur-statut");
+const bouton_enregistrer = document.querySelector("#bouton-enregistrer");
 
 if(localStorage.getItem("voitures"))
     voitures = JSON.parse(localStorage.getItem("voitures"));
 localStorage.setItem("voitures",JSON.stringify(voitures));
+
 let count = voitures.length + 1;
+let voiture_id = 0;
 afficher();
 
-form.addEventListener("submit",(event) =>{
-    event.preventDefault();
-    let voiture = {
-        "id": count++,
-        "marque": marque.value,
-        "modele": modele.value,
-        "immatriculation": immatriculation.value,
-        "categorie": categorie.value,
-        "prixJour": prix_jour.value,
-        "statut": statut.value
+function afficherErreur(input, errorElement, message) {
+    input.style.border = "2px solid red";
+    errorElement.textContent = message;
+    errorElement.style.color = "red";
+}
+
+function supprimerErreur(input, errorElement) {
+    input.style.border = "";
+    errorElement.textContent = "";
+}
+function validation() {
+    let valide = true;
+    if(marque.value.trim() === "") {
+        afficherErreur(marque,erreur_marque,"La marque est obligatoire.");
+        valide = false;
+    } 
+    else if(marque.value.trim().length < 2) {
+        afficherErreur(marque,erreur_marque,"La marque doit contenir au moins 2 caractères.");
+        valide = false;
+    } 
+    else{
+        supprimerErreur(marque, erreur_marque);
     }
-    voitures.push(voiture);
-    localStorage.setItem("voitures",JSON.stringify(voitures));
+    if (modele.value.trim() === "") {
+        afficherErreur(modele,erreur_modele,"Le modèle est obligatoire.");
+        valide = false;
+    } 
+    else if(modele.value.trim().length < 1) {
+        afficherErreur(modele,erreur_modele,"Le modèle est invalide.");
+        valide = false;
+    } 
+    else{
+        supprimerErreur(modele, erreur_modele);
+    }
+    const formatImmatriculation = /^AUTO-\d{3}$/;
+    if(immatriculation.value.trim() === "") {
+        afficherErreur(immatriculation,erreur_immatriculation,"L'immatriculation est obligatoire.");
+        valide = false;
+    }
+    else if(!formatImmatriculation.test(immatriculation.value.trim())) {
+        afficherErreur(immatriculation,erreur_immatriculation,"Le format doit être AUTO-001.");
+        valide = false;
+    }
+    else if(voitures.some(voiture =>voiture.immatriculation.toLowerCase() === immatriculation.value.trim().toLowerCase() && voiture.id != voiture_id)) {
+        afficherErreur(immatriculation,erreur_immatriculation,"Cette immatriculation existe déjà.");
+        valide = false;
+    } 
+    else{
+        supprimerErreur(immatriculation,erreur_immatriculation);
+    }
+    if(categorie.value === "") {
+        afficherErreur(categorie,erreur_categorie,"Veuillez choisir une catégorie.");
+        valide = false;
+    } 
+    else{
+        supprimerErreur(categorie, erreur_categorie);
+    }
+    if(prix_jour.value === "") {
+        afficherErreur(prix_jour,erreur_prix,"Le prix est obligatoire.");
+        valide = false;
+    } 
+    else if(Number(prix_jour.value) < 100 || Number(prix_jour.value) > 3000) {
+        afficherErreur(prix_jour,erreur_prix,"Le prix doit être compris entre 100 DH et 3000 DH.");
+        valide = false;
+    }
+    else{
+        supprimerErreur(prix_jour, erreur_prix);
+    }
+    return valide;
+}
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if(!validation())
+        return;
+    if(voiture_id == 0) {
+        let voiture = {
+            id: count++,
+            marque: marque.value.trim(),
+            modele: modele.value.trim(),
+            immatriculation: immatriculation.value.trim(),
+            categorie: categorie.value,
+            prixJour: Number(prix_jour.value),
+            statut: statut.value
+        };
+        voitures.push(voiture);
+    }
+    else{
+        let voiture = voitures.find(vv => vv.id == voiture_id);
+        voiture.marque = marque.value.trim();
+        voiture.modele = modele.value.trim();
+        voiture.immatriculation = immatriculation.value.trim();
+        voiture.categorie = categorie.value;
+        voiture.prixJour = Number(prix_jour.value);
+        voiture.statut = statut.value;
+    }
+    localStorage.setItem("voitures", JSON.stringify(voitures));
     afficher();
     form.reset();
+    voiture_id = 0;
+    bouton_enregistrer.textContent = "Ajouter la voiture";
+    annuler_modification.hidden = true;
+});
+annuler_modification.addEventListener("click",()=>{
+    form.reset();
+    voiture_id = 0;
+    bouton_enregistrer.textContent = "Ajouter la voiture";
+    annuler_modification.hidden = true;
 })
-
 function afficher(){
     liste_voitures.replaceChildren();
     if(voitures.length === 0){
@@ -91,7 +190,19 @@ function afficher(){
         modifier.dataset.id = voiture.id;
         modifier.setAttribute("aria-label",`Modifier ${voiture.marque} ${voiture.modele}, ${voiture.immatriculation}`);
         modifier.textContent = "Modifier";
-
+        modifier.addEventListener("click", () => {
+            voiture_id = voiture.id;
+            marque.value = voiture.marque;
+            modele.value = voiture.modele;
+            immatriculation.value = voiture.immatriculation;
+            categorie.value = voiture.categorie;
+            prix_jour.value = voiture.prixJour;
+            statut.value = voiture.statut;
+            bouton_enregistrer.textContent = "Modifier la voiture";
+            annuler_modification.hidden = false;
+            window.scrollTo(0, 0);
+        });
+        
         const supprimer = document.createElement("button");
         supprimer.type = "button";
         supprimer.className = "button button-delete";
@@ -100,11 +211,14 @@ function afficher(){
         supprimer.setAttribute("aria-label",`Supprimer ${voiture.marque} ${voiture.modele}, ${voiture.immatriculation}`);
         supprimer.textContent = "Supprimer";
         supprimer.addEventListener("click",() =>{
+            const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette voiture ?");
+            if(confirmation){
             voitures = voitures.filter(vv => vv.id != voiture.id);
             if(voitures.length === 0)
                 count = 1;
             localStorage.setItem("voitures",JSON.stringify(voitures));
             afficher();
+            }
         })
 
         div_actions.append(modifier,supprimer);
