@@ -1,6 +1,6 @@
 import { voituresInitiales } from "./data.js";
 
-let voitures = structuredClone(voituresInitiales);
+
 
 const form = document.querySelector("#formulaire-voiture");
 const marque = document.querySelector("#marque");
@@ -19,10 +19,16 @@ const erreur_categorie = document.querySelector("#erreur-categorie");
 const erreur_prix = document.querySelector("#erreur-prix-jour");
 const erreur_statut = document.querySelector("#erreur-statut");
 const bouton_enregistrer = document.querySelector("#bouton-enregistrer");
+const recherche = document.querySelector("#recherche");
+const filtre_statut = document.querySelector("#filtre-statut");
+const filtre_categorie = document.querySelector("#filtre-categorie");
+const tri_prix = document.querySelector("#tri-prix");
+let reinitialiser_filtres = document.querySelector("#reinitialiser-filtres");
 
-if(localStorage.getItem("voitures"))
-    voitures = JSON.parse(localStorage.getItem("voitures"));
-localStorage.setItem("voitures",JSON.stringify(voitures));
+if(!localStorage.getItem("voitures")){
+    localStorage.setItem("voitures",JSON.stringify(voituresInitiales));
+}
+let voitures = JSON.parse(localStorage.getItem("voitures"));
 
 let count = voitures.length + 1;
 let voiture_id = 0;
@@ -136,15 +142,15 @@ annuler_modification.addEventListener("click",()=>{
     bouton_enregistrer.textContent = "Ajouter la voiture";
     annuler_modification.hidden = true;
 })
-function afficher(){
+function afficher(lists=voitures){
     liste_voitures.replaceChildren();
-    if(voitures.length === 0){
+    if(lists.length === 0){
         etat_vide.hidden = false;
         return;
     }
     else
         etat_vide.hidden = true;
-    voitures.forEach(voiture => {
+    lists.forEach(voiture => {
         const tr = document.createElement("tr");
         const td_marque = document.createElement("td");
         const strong = document.createElement("strong");
@@ -214,10 +220,12 @@ function afficher(){
             const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette voiture ?");
             if(confirmation){
             voitures = voitures.filter(vv => vv.id != voiture.id);
-            if(voitures.length === 0)
-                count = 1;
             localStorage.setItem("voitures",JSON.stringify(voitures));
             afficher();
+            form.reset();
+            voiture_id = 0;
+            bouton_enregistrer.textContent = "Ajouter la voiture";
+            annuler_modification.hidden = true;
             }
         })
 
@@ -227,3 +235,54 @@ function afficher(){
         liste_voitures.appendChild(tr);
     });
 }
+function rechercher(liste) {
+    let input = recherche.value.toLowerCase();
+    let resultat = liste.filter((voiture) => {return (voiture.marque.toLowerCase().startsWith(input) ||
+            voiture.modele.toLowerCase().startsWith(input) ||voiture.immatriculation.toLowerCase().startsWith(input));});
+    return resultat;
+}
+function filtrerstatut(liste) {
+    let resultat = liste.filter((voiture) => { return (voiture.statut === filtre_statut.value || filtre_statut.value === "");});
+    return resultat;
+}
+function filtrercategorie(liste) {
+    let resultat = liste.filter((voiture) => {return (voiture.categorie === filtre_categorie.value || filtre_categorie.value === "");});
+    return resultat;
+}
+function trierPrix(liste) {
+    let resultat = [...liste];
+    if (tri_prix.value === "croissant") {
+        resultat.sort((a, b) => a.prixJour - b.prixJour);
+    }
+    if (tri_prix.value === "decroissant") {
+        resultat.sort((a, b) => b.prixJour - a.prixJour);
+    }
+    return resultat;
+}
+function appliquerFiltres() {
+    let resultat = [...voitures];
+    resultat = rechercher(resultat);
+    resultat = filtrerstatut(resultat);
+    resultat = filtrercategorie(resultat);
+    resultat = trierPrix(resultat);
+    afficher(resultat);
+}
+recherche.addEventListener("input",()=>{
+    appliquerFiltres();
+})
+filtre_statut.addEventListener("change",()=>{
+    appliquerFiltres();
+})
+filtre_categorie.addEventListener("change",()=>{
+    appliquerFiltres();
+})
+tri_prix.addEventListener("change", () => {
+    appliquerFiltres();
+});
+reinitialiser_filtres.addEventListener("click",()=>{
+    recherche.value="";
+    filtre_statut.value="";
+    filtre_categorie.value="";
+    tri_prix.value="";
+    afficher();
+})
