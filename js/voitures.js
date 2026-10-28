@@ -1,7 +1,5 @@
 import { voituresInitiales } from "./data.js";
 
-
-
 const form = document.querySelector("#formulaire-voiture");
 const marque = document.querySelector("#marque");
 const modele = document.querySelector("#modele");
@@ -30,7 +28,7 @@ if(!localStorage.getItem("voitures")){
 }
 let voitures = JSON.parse(localStorage.getItem("voitures"));
 
-let count = voitures.length + 1;
+let count = 7;
 let voiture_id = 0;
 afficher();
 
