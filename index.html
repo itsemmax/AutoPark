@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script src="js/dashboard.js" defer></script>
+</head>
+
+<body class="bg-[#F5F7FB] text-[#0B1B36] min-h-screen">
+    <header class="bg-white border-b border-gray-200">
+        <div class="px-6 lg:px-35 h-[85px] flex items-center justify-between">
+            <a href="voitures.html" aria-label="AutoPark — Gestion du parc" class="flex items-center gap-3 no-underline text-[22px] font-extrabold tracking-[-0.7px] text-[#18283b]">
+            <span aria-hidden="true" class="w-11 h-11 rounded-xl bg-[#2855d7] text-white text-[29px] flex items-center justify-center">A<span class="text-[#c4d2ff]">.</span></span>
+            <span>AutoPark<small class="block text-[#627184] text-[9px] tracking-[2.3px]">ATLAS AUTO</small></span></a>
+            <nav class="hidden md:flex items-center gap-2">
+                <a href="index.html" class="bg-[#ecf1ff]  text-[#2449b5] px-6 py-3 rounded-lg font-semibold">Dashboard</a>
+                <a href="voitures.html" class="text-[#627184] hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold">Gestion du parc</a>
+            </nav>
+            <p class="hidden lg:block text-gray-500 text-sm">Agence de location</p>
+        </div>
+    </header>
+    <main class="p-6 lg:px-22 text-xs">
+        <section class="mb-10 lg:mx-15">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                <div>
+                    <p class="text-blue-600 font-bold text-sm tracking-[3px] mb-2">TABLEAU DE BORD</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Bienvenue sur AutoPark</h2>
+                    <p class="text-gray-500">Voici un aperçu de votre parc automobile et de sa disponibilité.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8 lg:mx-13">
+            <article class="bg-white border border-blue-100 rounded-2xl p-6">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-blue-600 font-semibold mb-3">Total des voitures</p>
+                        <p id="total" class="text-4xl font-bold">0</p>
+                        <p class="text-gray-500 text-sm mt-2">Véhicules dans le parc</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white border border-green-100 rounded-2xl p-6">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-gray-600 font-semibold mb-3">Disponibles</p>
+                        <p id="disponibles" class="text-4xl font-bold">0</p>
+                        <p class="text-gray-500 text-sm mt-2">Prêtes à être louées</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white border border-blue-100 rounded-2xl p-6">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-green-600 font-semibold mb-3">Louées</p>
+                        <p id="louees" class="text-4xl font-bold">0</p>
+                        <p class="text-gray-500 text-sm mt-2">Actuellement en location</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white border border-orange-100 rounded-2xl p-6">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-red-600 font-semibold mb-3">En maintenance</p>
+                        <p id="maintenance" class="text-4xl font-bold">0</p>
+                        <p class="text-gray-500 text-sm mt-2">Véhicules indisponibles</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class=" bg-white border border-gray-200 rounded-2xl p-6 lg:mx-13">
+            <div class="mb-6">
+                <div>
+                    <h3 class="text-xl font-bold">Dernières voitures ajoutées</h3>
+                    <p class="text-gray-500 text-sm mt-1">Les 5 derniers véhicules enregistrés dans le parc.</p>
+                </div>
+            </div>
+
+            <div id="table-container" class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-[#F5F7FB] text-gray-500 text-xs text-left">
+                            <th class="px-8 py-4">MARQUE</th>
+                            <th class="px-8 py-4">MODÈLE</th>
+                            <th class="px-8 py-4">IMMATRICULATION</th>
+                            <th class="px-8 py-4">CATÉGORIE</th>
+                            <th class="px-8 py-4">PRIX / JOUR</th>
+                            <th class="px-8 py-4">STATUT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liste-dashboard"></tbody>
+                </table>
+            </div>
+
+            <div id="etat-vide" class="hidden py-14 text-center">
+                <h3 class="text-lg font-bold">Aucune voiture à afficher</h3>
+                <p class="text-gray-500 text-sm mt-2">Ajoutez une voiture depuis la gestion du parc.</p>
+            </div>
+            <div class=" flex justify-between text-xs text-[#627184] my-3">
+                <p>Atlas Auto · Parc automobile</p>
+                <p>Disponible · Louée · En maintenance</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="px-6 lg:px-35 py-4 text-xs text-gray-500">
+        <div class="flex flex-col sm:flex-row justify-between gap-3">
+            <p class="font-bold text-black">Atlas Auto · Parc automobile</p>
+            <p>Disponible · Louée · En maintenance</p>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -239,6 +239,8 @@ function rechercher(liste) {
             voiture.modele.toLowerCase().startsWith(input) ||voiture.immatriculation.toLowerCase().startsWith(input));});
     return resultat;
 }
+
+
 function filtrerstatut(liste) {
     let resultat = liste.filter((voiture) => { return (voiture.statut === filtre_statut.value || filtre_statut.value === "");});
     return resultat;
