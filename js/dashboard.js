@@ -1,3 +1,5 @@
+import { voituresInitiales } from "./data.js";
+
 const total = document.querySelector("#total");
 const disponibles = document.querySelector("#disponibles");
 const louees = document.querySelector("#louees");
@@ -9,11 +11,10 @@ const liste_dashboard = document.querySelector("#liste-dashboard");
 const etat_vide = document.querySelector("#etat-vide");
 const table_container = document.querySelector("#table-container");
 
-let voitures = [];
-
-if (localStorage.getItem("voitures")) {
-    voitures = JSON.parse(localStorage.getItem("voitures"));
+if(!localStorage.getItem("voitures")){
+    localStorage.setItem("voitures",JSON.stringify(voituresInitiales));
 }
+let voitures = JSON.parse(localStorage.getItem("voitures"));
 
 afficherCompteurs();
 afficherDernieresVoitures();
