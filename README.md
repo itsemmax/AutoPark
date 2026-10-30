@@ -1,104 +1,360 @@
-# AutoPark — Starter apprenant
+# 🚗 AutoPark — Gestion d’un parc automobile
 
-Projet individuel · 5 jours · HTML / CSS / JavaScript Vanilla ES6+
+AutoPark est une application web de gestion d’un parc automobile réalisée dans le cadre d’un projet individuel à **Simplon / YouCode**.
 
-## Ce qui est fourni
+L’application permet à une agence fictive de location de voitures, **Atlas Auto**, de gérer ses véhicules, leurs tarifs et leur disponibilité à travers une interface simple et responsive.
 
-- `voitures.html` : la page **Gestion du parc**, sans images.
-- `css/style.css` : le style complet et responsive.
-- `js/data.js` : six voitures fictives sous forme de tableau d'objets exporté.
-- `js/voitures.js` : point d'entrée JavaScript avec des étapes, sans implémentation.
+Le projet fonctionne entièrement côté frontend, sans backend ni base de données. Les données sont sauvegardées dans le navigateur grâce à `localStorage`.
 
-Le formulaire, la recherche, les filtres et les boutons sont **statiques**.
-Les six lignes du tableau sont uniquement des exemples HTML. Elles correspondent
-aux données fournies et doivent être remplacées par votre affichage JavaScript.
-Aucune fonctionnalité JavaScript du brief n'est réalisée dans ce starter.
+---
 
-## Lancer le projet
+## 📸 Aperçu du projet
 
-1. Ouvrir le dossier dans VS Code.
-2. Démarrer un serveur local avec Live Server, puis ouvrir `voitures.html`.
-3. Autre possibilité, si Python est installé : `python -m http.server 8000`,
-   puis ouvrir `http://localhost:8000/voitures.html`.
+### Dashboard
 
-Un serveur local est nécessaire pour travailler avec les modules ES6.
-La racine du serveur ne contient pas encore de page `index.html` : ouvrir
-explicitement `voitures.html` au démarrage.
+![Dashboard AutoPark](./assets/images/dashboard.png)
 
-## La seconde page est à créer
+Le dashboard permet de visualiser rapidement :
 
-Le lien « Dashboard » pointe vers `index.html`. **Ce fichier n'est pas fourni** :
-c'est votre deuxième mission. Tant que vous ne l'avez pas créé, ce lien ne mène
-pas à une page existante.
+- le nombre total de voitures ;
+- les voitures disponibles ;
+- les voitures louées ;
+- les voitures en maintenance ;
+- les 5 dernières voitures ajoutées.
 
-Créer sa structure HTML, son CSS et son JavaScript. Afficher quatre compteurs :
-total, disponibles, louées et en maintenance. Lire les mêmes données que la page
-de gestion. Aucun graphique ni bibliothèque de graphiques n'est nécessaire.
+### Gestion du parc
 
-## Travail JavaScript à réaliser
+![Gestion du parc AutoPark](./assets/images/gestion-parc.png)
 
-1. Importer les données initiales et générer les lignes du tableau.
-2. Ajouter une voiture et valider les champs.
-3. Modifier une voiture via le même formulaire et permettre l'annulation.
-4. Supprimer après confirmation.
-5. Combiner recherche, filtres et tri numérique des prix.
-6. Sauvegarder avec `localStorage` et JSON ; récupérer les données au chargement.
-7. Organiser les responsabilités dans des modules réutilisables.
-8. Réaliser le dashboard et vérifier les données sur les deux pages.
+La page de gestion permet d'ajouter, modifier, supprimer, rechercher, filtrer et trier les voitures du parc.
 
-Utiliser les données initiales uniquement en l'absence de sauvegarde. Un tableau
-vide sauvegardé doit rester vide. Les compteurs sont actualisés à l'ouverture
-ou au rechargement du dashboard.
+---
 
-## Repères du HTML
+## 🎯 Objectif du projet
 
-| Élément | Sélecteur |
-| --- | --- |
-| Formulaire | `#formulaire-voiture` |
-| Identifiant en cours de modification | `#voiture-id` |
-| Titre du formulaire | `#titre-formulaire` |
-| Marque / modèle | `#marque` / `#modele` |
-| Immatriculation | `#immatriculation` |
-| Catégorie / statut | `#categorie` / `#statut` |
-| Prix | `#prix-jour` |
-| Bouton d'enregistrement | `#bouton-enregistrer` |
-| Annulation de la modification | `#annuler-modification` |
-| Message du formulaire | `#message-formulaire` |
-| Corps du tableau | `#liste-voitures` |
-| Recherche | `#recherche` |
-| Filtres | `#filtre-statut` / `#filtre-categorie` |
-| Tri | `#tri-prix` |
-| Réinitialisation | `#reinitialiser-filtres` |
-| Message de gestion | `#message-parc` |
-| État vide / texte | `#etat-vide` / `#texte-etat-vide` |
+L’objectif principal est de développer une application web permettant de gérer les voitures d’une agence de location en utilisant **JavaScript Vanilla ES6+**.
 
-Les boutons de démonstration portent `data-action="modifier"` ou
-`data-action="supprimer"`, et `data-id` indique l'identifiant de la voiture.
-Conserver ces repères lors de la génération dynamique si vous les utilisez.
+Ce projet permet notamment de pratiquer :
 
-Les éléments de message d'erreur sont déjà placés sous les champs, par exemple
-`#erreur-marque` et `#erreur-prix-jour`. Ajouter `aria-invalid="true"` aux champs
-invalides et le retirer après correction. Le formulaire utilise `novalidate`
-pour vous laisser développer vos propres vérifications JavaScript.
+- la manipulation du DOM ;
+- les événements JavaScript ;
+- les tableaux d’objets ;
+- les opérations CRUD ;
+- la validation des formulaires ;
+- les méthodes `filter()`, `find()`, `some()`, `sort()`... ;
+- les modules ES6 avec `import` / `export` ;
+- la sauvegarde des données avec `localStorage` ;
+- la création d’une interface responsive.
 
-Retirer ou remettre l'attribut `hidden` pour contrôler l'état vide et le bouton
-d'annulation. Les classes `success` et `error` peuvent être appliquées aux messages.
+---
 
-Styles de statut disponibles : `.badge-disponible`, `.badge-louee`,
-`.badge-maintenance`, avec la classe commune `.badge`.
+## ✨ Fonctionnalités
 
-Le tableau défile horizontalement dans sa propre zone sur les petits écrans.
-Le reste de la page reste adapté à la largeur de l'écran.
+### Gestion des voitures
 
-## À vérifier avant de rendre
+L’utilisateur peut :
 
-- Ajout valide et refus des champs vides ou composés uniquement d'espaces.
-- Prix positif et immatriculation unique, y compris lors d'une modification.
-- Annulation et confirmation des actions.
-- Recherche, filtres et tri utilisés ensemble.
-- Conservation des données après rechargement, même quand le parc est vide.
-- Exactitude des quatre compteurs et navigation entre les deux pages.
-- Utilisation sur mobile et absence d'erreurs dans la console.
+- afficher dynamiquement les voitures du parc ;
+- ajouter une nouvelle voiture ;
+- modifier une voiture existante ;
+- annuler une modification ;
+- supprimer une voiture après confirmation ;
+- conserver un identifiant pour chaque voiture.
 
-Compléter ensuite ce README avec vos choix, les fonctionnalités réalisées,
-l'organisation de vos modules et le lien de déploiement.
+Chaque voiture contient :
+
+- une marque ;
+- un modèle ;
+- une immatriculation ;
+- une catégorie ;
+- un prix journalier ;
+- un statut.
+
+### Validation du formulaire
+
+Le formulaire vérifie notamment :
+
+- les champs obligatoires ;
+- la marque et le modèle ;
+- le format de l’immatriculation `AUTO-XXX` ;
+- l’unicité de l’immatriculation ;
+- la catégorie ;
+- le prix journalier.
+
+Les erreurs sont affichées directement près des champs concernés.
+
+### Recherche et filtres
+
+Il est possible de rechercher une voiture par :
+
+- marque ;
+- modèle ;
+- immatriculation.
+
+L’utilisateur peut également filtrer les voitures par :
+
+- statut ;
+- catégorie.
+
+Les voitures peuvent être triées selon leur prix :
+
+- prix croissant ;
+- prix décroissant.
+
+Un bouton permet également de réinitialiser tous les critères.
+
+### Persistance des données
+
+Les voitures sont sauvegardées dans le navigateur avec :
+
+```javascript
+localStorage
+```
+
+Les données sont transformées grâce à :
+
+```javascript
+JSON.stringify()
+JSON.parse()
+```
+
+Ainsi, les modifications restent disponibles après le rechargement de la page.
+
+### Dashboard
+
+Le dashboard utilise les mêmes données enregistrées dans `localStorage`.
+
+Il affiche quatre indicateurs principaux :
+
+| Indicateur | Description |
+|---|---|
+| Total | Nombre total de voitures |
+| Disponibles | Voitures disponibles à la location |
+| Louées | Voitures actuellement louées |
+| En maintenance | Voitures temporairement indisponibles |
+
+Une section affiche également les **5 dernières voitures ajoutées** au parc.
+
+---
+
+## 🛠️ Technologies utilisées
+
+- **HTML5** — structure des pages
+- **CSS3** — mise en forme de la page de gestion
+- **Tailwind CSS** — interface du dashboard
+- **JavaScript ES6+** — logique de l’application
+- **DOM** — manipulation dynamique de l’interface
+- **localStorage** — persistance des données
+- **Git** — gestion des versions
+- **GitHub** — hébergement du code source
+- **Jira** — organisation et suivi des tâches
+
+---
+
+## 📁 Structure du projet
+
+```text
+AutoPark/
+│
+├── index.html
+├── voitures.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── data.js
+│   ├── voitures.js
+│   └── dashboard.js
+│
+├── assets/
+│   └── images/
+│       ├── dashboard.png
+│       ├── gestion-parc.png
+│       └── jira.png
+│
+└── README.md
+```
+
+### Rôle des fichiers
+
+**`index.html`**  
+Contient l’interface du dashboard.
+
+**`voitures.html`**  
+Contient l’interface principale de gestion du parc automobile.
+
+**`data.js`**  
+Contient les données initiales des voitures fournies au démarrage du projet.
+
+**`voitures.js`**  
+Contient la logique principale de gestion : affichage, ajout, modification, suppression, validation, recherche, filtres, tri et `localStorage`.
+
+**`dashboard.js`**  
+Récupère les données du `localStorage`, calcule les différents compteurs et affiche les dernières voitures ajoutées.
+
+---
+
+## 💾 Données
+
+Les données initiales sont représentées sous forme d’un tableau d’objets JavaScript.
+
+Exemple :
+
+```javascript
+{
+    id: 1,
+    marque: "Dacia",
+    modele: "Sandero",
+    immatriculation: "AUTO-001",
+    categorie: "Citadine",
+    prixJour: 250,
+    statut: "Disponible"
+}
+```
+
+Au premier lancement, les données initiales sont enregistrées dans `localStorage`.
+
+Les opérations suivantes utilisent ensuite les données sauvegardées :
+
+```text
+Ajouter
+   ↓
+Modifier
+   ↓
+Supprimer
+   ↓
+localStorage
+   ↓
+Dashboard
+```
+
+---
+
+## 🔄 Opérations CRUD
+
+| Opération | Fonction |
+|---|---|
+| Create | Ajouter une voiture |
+| Read | Afficher les voitures |
+| Update | Modifier une voiture |
+| Delete | Supprimer une voiture |
+
+Toutes les opérations sont réalisées dynamiquement en JavaScript sans rechargement de la page.
+
+---
+
+## 📊 Organisation avec Jira
+
+Le projet a été organisé avec **Jira** afin de découper le développement en différentes tâches et de suivre leur état d’avancement.
+
+![Tableau Jira AutoPark](./assets/images/jira.png)
+
+Les tâches ont été réparties entre différentes étapes :
+
+- analyse du brief ;
+- initialisation du projet ;
+- affichage dynamique des voitures ;
+- développement du CRUD ;
+- validation du formulaire ;
+- gestion du `localStorage` ;
+- recherche et filtres ;
+- tri des voitures ;
+- création du dashboard ;
+- responsive design ;
+- tests et corrections ;
+- documentation et livraison.
+
+---
+
+## 🚀 Installation et lancement
+
+### 1. Cloner le dépôt
+
+```bash
+git clone <URL-DU-DEPOT>
+```
+
+### 2. Accéder au projet
+
+```bash
+cd AutoPark
+```
+
+### 3. Lancer un serveur local
+
+Le projet utilise les modules ES6, il est donc recommandé de l’exécuter avec un serveur local.
+
+Avec VS Code, vous pouvez par exemple utiliser **Live Server**.
+
+Puis ouvrir :
+
+```text
+index.html
+```
+
+pour accéder au dashboard, ou :
+
+```text
+voitures.html
+```
+
+pour accéder à la gestion du parc.
+
+---
+
+## 🌐 Déploiement
+
+L’application AutoPark est déployée en ligne et accessible via le lien suivant :
+
+🔗 **Application déployée :** [(https://autopark-chi.vercel.app/index.html)]
+
+Le projet contient deux pages principales :
+
+- **Dashboard :** `index.html`
+- **Gestion du parc :** `voitures.html`
+
+🔗 **Dépôt GitHub :** [(https://github.com/itsemmax/AutoPark)]
+---
+
+## 📱 Responsive Design
+
+L’application est conçue pour rester utilisable sur différents écrans :
+
+- 📱 Mobile
+- 📱 Tablette
+- 💻 Desktop
+
+Le dashboard utilise notamment une grille responsive afin d’adapter les indicateurs à la largeur de l’écran.
+
+---
+
+## 🧠 Compétences développées
+
+Ce projet m’a permis de pratiquer et renforcer :
+
+- JavaScript ES6+ ;
+- manipulation du DOM ;
+- gestion des événements avec `addEventListener()` ;
+- utilisation de `preventDefault()` ;
+- manipulation de tableaux d’objets ;
+- validation de formulaires ;
+- opérations CRUD ;
+- utilisation de `find()`, `filter()`, `some()` et `sort()` ;
+- gestion de `localStorage` ;
+- utilisation de `JSON.stringify()` et `JSON.parse()` ;
+- modules JavaScript avec `import` / `export` ;
+- responsive design ;
+- Git et GitHub ;
+- organisation des tâches avec Jira.
+
+---
+
+## 👩‍💻 Réalisation
+
+Projet réalisé individuellement dans le cadre de la formation **Développeur Web et Web Mobile**.
+
+**Projet :** AutoPark — Gestion d’un parc automobile  
+**Contexte :** Simplon / YouCode  
+**Durée :** 5 jours  
+**Date :** Octobre 2026
