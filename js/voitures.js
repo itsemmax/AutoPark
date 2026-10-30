@@ -42,35 +42,8 @@ function supprimerErreur(input, errorElement) {
     input.style.border = "";
     errorElement.textContent = "";
 }
-function reset_validation() {
-    supprimerErreur(marque, erreur_marque);
-    supprimerErreur(modele, erreur_modele);
-    supprimerErreur(immatriculation, erreur_immatriculation);
-    supprimerErreur(categorie, erreur_categorie);
-    supprimerErreur(prix_jour, erreur_prix);
-    supprimerErreur(statut, erreur_statut);
-}
 function validation() {
     let valide = true;
-    marque.addEventListener("input", function() {
-        supprimerErreur(marque, erreur_marque);
-    });
-
-    modele.addEventListener("input", function() {
-        supprimerErreur(modele,erreur_modele);
-    });
-
-    immatriculation.addEventListener("input", function() {
-        supprimerErreur(immatriculation,erreur_immatriculation);
-    });
-
-    categorie.addEventListener("change", function() {
-        supprimerErreur(categorie,erreur_categorie);
-    });
-
-    prix_jour.addEventListener("input", function() {
-        supprimerErreur(prix_jour,erreur_prix);
-    });
     if(marque.value.trim() === "") {
         afficherErreur(marque,erreur_marque,"La marque est obligatoire.");
         valide = false;
@@ -79,6 +52,9 @@ function validation() {
         afficherErreur(marque,erreur_marque,"La marque doit contenir au moins 2 caractères.");
         valide = false;
     } 
+    else{
+        supprimerErreur(marque, erreur_marque);
+    }
     if (modele.value.trim() === "") {
         afficherErreur(modele,erreur_modele,"Le modèle est obligatoire.");
         valide = false;
@@ -87,6 +63,9 @@ function validation() {
         afficherErreur(modele,erreur_modele,"Le modèle est invalide.");
         valide = false;
     } 
+    else{
+        supprimerErreur(modele, erreur_modele);
+    }
     const formatImmatriculation = /^AUTO-\d{3}$/;
     if(immatriculation.value.trim() === "") {
         afficherErreur(immatriculation,erreur_immatriculation,"L'immatriculation est obligatoire.");
@@ -99,6 +78,9 @@ function validation() {
     else if(voitures.some(voiture =>voiture.immatriculation.toLowerCase() === immatriculation.value.trim().toLowerCase() && voiture.id != voiture_id)) {
         afficherErreur(immatriculation,erreur_immatriculation,"Cette immatriculation existe déjà.");
         valide = false;
+    } 
+    else{
+        supprimerErreur(immatriculation,erreur_immatriculation);
     }
     if(categorie.value === "") {
         afficherErreur(categorie,erreur_categorie,"Veuillez choisir une catégorie.");
@@ -115,13 +97,15 @@ function validation() {
         afficherErreur(prix_jour,erreur_prix,"Le prix doit être compris entre 100 DH et 3000 DH.");
         valide = false;
     }
+    else{
+        supprimerErreur(prix_jour, erreur_prix);
+    }
     return valide;
 }
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if(!validation()){
+    if(!validation())
         return;
-    }
     if(voiture_id == 0) {
         let voiture = {
             id: count++,
@@ -152,7 +136,6 @@ form.addEventListener("submit", (event) => {
 });
 annuler_modification.addEventListener("click",()=>{
     form.reset();
-    reset_validation();
     voiture_id = 0;
     bouton_enregistrer.textContent = "Ajouter la voiture";
     annuler_modification.hidden = true;
@@ -212,7 +195,6 @@ function afficher(lists=voitures){
         modifier.setAttribute("aria-label",`Modifier ${voiture.marque} ${voiture.modele}, ${voiture.immatriculation}`);
         modifier.textContent = "Modifier";
         modifier.addEventListener("click", () => {
-            reset_validation();
             voiture_id = voiture.id;
             marque.value = voiture.marque;
             modele.value = voiture.modele;
@@ -257,8 +239,6 @@ function rechercher(liste) {
             voiture.modele.toLowerCase().startsWith(input) ||voiture.immatriculation.toLowerCase().startsWith(input));});
     return resultat;
 }
-
-
 function filtrerstatut(liste) {
     let resultat = liste.filter((voiture) => { return (voiture.statut === filtre_statut.value || filtre_statut.value === "");});
     return resultat;
