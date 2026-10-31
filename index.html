@@ -76,7 +76,7 @@
             </article>
         </section>
 
-        <section class=" bg-white border border-gray-200 rounded-2xl p-6 lg:mx-13">
+        <section class=" bg-white border border-gray-200 rounded-2xl p-6 mb-8 lg:mx-13">
             <div class="mb-6">
                 <div>
                     <h3 class="text-xl font-bold">Dernières voitures ajoutées</h3>
@@ -107,6 +107,40 @@
             <div class=" flex justify-between text-xs text-[#627184] my-3">
                 <p>Atlas Auto · Parc automobile</p>
                 <p>Disponible · Louée · En maintenance</p>
+            </div>
+        </section>
+        <section class="bg-white border border-gray-200 rounded-2xl p-6 lg:mx-13">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                <div>
+                    <h3 class="text-xl font-bold">Voitures par statut</h3>
+                    <p class="text-gray-500 text-sm mt-1">Consultez les véhicules selon leur statut.</p>
+                </div>
+                <div class="flex bg-[#F1F4FA] rounded-lg p-1">
+                    <button id="btn-disponible" class="bg-white text-[#2855d7] px-4 py-2 rounded-md">Disponible</button>
+                    <button id="btn-louee" class="text-[#627184] px-4 py-2 rounded-md ">Louée</button>
+                    <button id="btn-maintenance" class="text-[#627184] px-4 py-2 rounded-md ">En maintenance</button>
+                </div>
+            </div>
+
+            <div id="table-container" class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-[#F5F7FB] text-gray-500 text-xs text-left">
+                            <th class="px-8 py-4">MARQUE</th>
+                            <th class="px-8 py-4">MODÈLE</th>
+                            <th class="px-8 py-4">IMMATRICULATION</th>
+                            <th class="px-8 py-4">CATÉGORIE</th>
+                            <th class="px-8 py-4">PRIX / JOUR</th>
+                            <th class="px-8 py-4">STATUT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liste-statut"></tbody>
+                </table>
+            </div>
+
+            <div id="etat-vide-statut" class="hidden py-14 text-center">
+                <h3 class="text-lg font-bold">Aucune voiture à afficher</h3>
+                <p class="text-gray-500 text-sm mt-2">Aucune voiture avec ce statut.</p>
             </div>
         </section>
     </main>
