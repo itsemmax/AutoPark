@@ -124,7 +124,7 @@ form.addEventListener("submit", (event) => {
     }
     if(voiture_id == 0) {
         let voiture = {
-            id: count++,
+            id: count,
             marque: marque.value.trim(),
             modele: modele.value.trim(),
             immatriculation: immatriculation.value.trim(),
@@ -132,6 +132,7 @@ form.addEventListener("submit", (event) => {
             prixJour: Number(prix_jour.value),
             statut: statut.value
         };
+        count++;
         voitures.push(voiture);
     }
     else{
