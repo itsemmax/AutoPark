@@ -29,6 +29,9 @@ if(!localStorage.getItem("voitures")){
 let voitures = JSON.parse(localStorage.getItem("voitures"));
 
 let count = 7;
+if (voitures.length > 0) {
+    count = voitures[voitures.length - 1].id + 1;
+}
 let voiture_id = 0;
 afficher();
 
