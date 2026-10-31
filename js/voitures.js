@@ -28,10 +28,8 @@ if(!localStorage.getItem("voitures")){
 }
 let voitures = JSON.parse(localStorage.getItem("voitures"));
 
-let count = 7;
-if (voitures.length > 0) {
-    count = voitures[voitures.length - 1].id + 1;
-}
+let count = Number(localStorage.getItem("count")) || 7;
+
 let voiture_id = 0;
 afficher();
 
@@ -136,6 +134,7 @@ form.addEventListener("submit", (event) => {
             statut: statut.value
         };
         count++;
+        localStorage.setItem("count",count);
         voitures.push(voiture);
     }
     else{
