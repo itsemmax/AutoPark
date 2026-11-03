@@ -73,49 +73,27 @@
                     <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4">
                         <div class="flex justify-between">
                             <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">Citadine</p>
-                            <input type="radio" name="voiture" value="dacia" checked class="accent-[#2852E3]">
+                            <input type="radio" name="voiture" value="dacia" checked>
                         </div>
                         <h3 class="font-bold text-sm mt-4">Dacia Sandero</h3>
                         <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
                         <p class="text-[#2852E3] font-bold text-sm mt-4">250 MAD / jour</p>
-                    </label>
-                    <label class="relative border border-[#D8E1EF] rounded-xl p-4">
-                        <div class="flex justify-between">
-                            <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">Citadine</p>
-                            <input type="radio" name="voiture" value="renault"
-                                class="absolute top-5 right-4 accent-[#2852E3]">
-                        </div>
-                        <h3 class="font-bold text-sm mt-4">Renault Clio</h3>
-                        <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
-                        <p class="text-[#2852E3] font-bold text-sm mt-4">300 MAD / jour</p>
-                    </label>
-                    <label class="relative border border-[#D8E1EF] rounded-xl p-4">
-                        <div class="flex justify-between">
-                            <input type="radio" name="voiture" value="duster"
-                                class="absolute top-5 right-4 accent-[#2852E3]">
-                            <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">SUV</p>
-                        </div>
-                        <h3 class="font-bold text-sm mt-4">Dacia Duster</h3>
-                        <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
-                        <p class="text-[#2852E3] font-bold text-sm mt-4">450 MAD / jour</p>
                     </label>
                 </div>
                 <h3 class=" border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm mb-6">Votre période de location</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="date-debut" class="block font-semibold mb-2">Date de début *</label>
-                        <input type="date" id="date-debut" value="2026-11-10"
-                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <input type="date" id="date-debut"
+                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
                     </div>
                     <div>
                         <label for="date-fin" class="block font-semibold mb-2">Date de fin *</label>
-                        <input type="date" id="date-fin" value="2026-11-12"
-                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 ">
+                        <input type="date" id="date-fin"
+                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
                     </div>
                 </div>
-                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">
-                    Durée : 3 jours. Les dates de début et de fin sont incluses.
-                </div>
+                <div id = "duree" class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Les dates de début et de fin sont incluses.</div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between gap-2">
                     <button type="button"
@@ -291,14 +269,22 @@
             </div>
             <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-6 lg:h-130">
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">VOTRE LOCATION</p>
-                <h2 class="font-bold text-xl mb-3 lg:text-3xl">Dacia Sandero</h2>
-                <p class="text-[#697C94] text-[13px]">Citadine · 250 MAD / jour</p>
+                <h2 id = "marque" class="font-bold text-xl mb-3 lg:text-3xl">__</h2>
+                <p id = "ctg-prix" class="text-[#697C94] text-[13px]">__</p>
                 <hr class="border-[#D8E1EF] my-5">
-                <p class="font-bold text-[14px]">10 → 12 novembre 2026</p>
-                <p class="text-[#697C94] text-[15px] mt-4">3 jours · dates incluses</p>
+                <p id ="date" class="font-bold text-[14px]">__</p>
+                <p id = "days" class="text-[#697C94] text-[15px] mt-4">__</p>
                 <div class="mt-6 flex justify-between gap-3 text-[15px] ">
-                    <p class="text-[#697C94]">Véhicule · 3 × 250 MAD</p>
-                    <p class="font-bold whitespace-nowrap">750 MAD</p>
+                    <p id="numberofprix" class="text-[#697C94]">__</p>
+                    <p id = "totalprice" class="font-bold whitespace-nowrap">__</p>
+                </div>
+                <div id="recap-siege-bebe" class="mt-5 flex justify-between gap-3 text-[15px]">
+                    <p id="siege-bebe-prix" class="text-[#697C94]">Siège bébé · 3 × 30 MAD</p>
+                    <p id="siege-bebe-total" class="font-bold whitespace-nowrap">90 MAD</p>
+                </div>
+                <div id="recap-conducteur" class="mt-5 flex justify-between gap-3 text-[15px]">
+                    <p id="conducteur-prix" class="text-[#697C94]">Conducteur supplémentaire · 3 × 200 MAD</p>
+                    <p id="conducteur-total" class="font-bold whitespace-nowrap">600 MAD</p>
                 </div>
                 <div class="mt-5 flex justify-between gap-3 text-[15px] ">
                     <p class="text-[#697C94]">Récupération</p>
@@ -307,7 +293,7 @@
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between items-center gap-3 text-[15px] ">
                     <p class="font-bold">Total estimé</p>
-                    <p class="text-[#2852E3] text-2xl font-bold whitespace-nowrap">750 MAD</p>
+                    <p id="total" class="text-[#2852E3] text-2xl font-bold whitespace-nowrap">__</p>
                 </div>
                 <p class="text-[#697C94] text-[13px] mt-5">Frais de récupération facturés une seule fois.</p>
                 <div class="bg-[#F4F6FA] text-[#697C94] text-[13px] rounded-lg px-4 py-4 mt-5">Une demande, sans paiement en ligne.</div>
