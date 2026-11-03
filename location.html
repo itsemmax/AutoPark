@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script type="module" src="js/location.js"></script>
+</head>
+
+<body class="bg-[#F5F7FB] text-[#0B1B36] min-h-screen">
+    <header class="bg-white border-b border-gray-200">
+        <div class="px-6 lg:px-35 h-[85px] flex items-center justify-between">
+            <a href="voitures.html" aria-label="AutoPark — Gestion du parc"
+                class="flex items-center gap-3 no-underline text-[22px] font-extrabold tracking-[-0.7px] text-[#18283b]">
+                <span aria-hidden="true"
+                    class="w-11 h-11 rounded-xl bg-[#2855d7] text-white text-[29px] flex items-center justify-center">A<span
+                        class="text-[#c4d2ff]">.</span></span>
+                <span>AutoPark<small class="block text-[#627184] text-[9px] tracking-[2.3px]">ATLAS AUTO</small></span></a>
+            <nav class="hidden md:flex items-center gap-2">
+                <a href="index.html"
+                    class="text-[#627184] hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold">Dashboard</a>
+                <a href="voitures.html"
+                    class="text-[#627184] hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold">Gestion du parc</a>
+                <a href="location.html" class="bg-[#ecf1ff]  text-[#2449b5] px-6 py-3 rounded-lg font-semibold">Ma location</a>
+            </nav>
+            <p class="hidden lg:block text-gray-500 text-sm">Agence de location</p>
+        </div>
+    </header>
+    <main class="p-6 lg:px-22 text-xs">
+        <section class="mb-10 lg:mx-15">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                <div>
+                    <p class="text-blue-600 font-bold text-sm tracking-[3px] mb-2">VOTRE LOCATION SUR MESURE</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Composez votre location</h2>
+                    <p class="text-gray-500">Votre voiture, vos dates, vos options. À vous de choisir.</p>
+                </div>
+            </div>
+        </section>
+        <section class=" mb-10 lg:mx-15 bg-white text-[9px] py-4.5 rounded-xl border border-[#D8E1EF] flex gap-3.5 px-[25px] lg:text-[18px] lg:justify-around">
+            <div class="flex gap-3 flex-col lg:flex-row ">
+                <p class="bg-[#2852E3] text-[#FFFFFF] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">
+                    1</p>
+                <p class="text-[#2852E3] lg:py-3 lg:text-[13px]">Véhicule</p>
+            </div>
+            <div class="flex gap-3 flex-col lg:flex-row">
+                <p class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">
+                    2</p>
+                <p class="text-[#697C94] lg:py-3 lg:text-[13px]">Récupération</p>
+            </div>
+            <div class="flex gap-3 flex-col lg:flex-row">
+                <p
+                    class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">
+                    3</p>
+                <p class="text-[#697C94] lg:py-3 lg:text-[13px]">Options</p>
+            </div>
+            <div class="flex gap-3 flex-col lg:flex-row">
+                <p
+                    class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">
+                    4</p>
+                <p class="text-[#697C94] lg:py-3 lg:text-[13px] ">Récapitulatif</p>
+            </div>
+        </section>
+        <section class="grid gap-3 lg:mx-15 lg:grid-cols-3">
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2">
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">01 / VÉHICULE</p>
+                <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Choisissez votre véhicule</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Sélectionnez une voiture disponible et votre période de
+                    location.</p>
+                <div id = "cards" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4">
+                        <div class="flex justify-between">
+                            <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">Citadine</p>
+                            <input type="radio" name="voiture" value="dacia" checked class="accent-[#2852E3]">
+                        </div>
+                        <h3 class="font-bold text-sm mt-4">Dacia Sandero</h3>
+                        <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">250 MAD / jour</p>
+                    </label>
+                    <label class="relative border border-[#D8E1EF] rounded-xl p-4">
+                        <div class="flex justify-between">
+                            <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">Citadine</p>
+                            <input type="radio" name="voiture" value="renault"
+                                class="absolute top-5 right-4 accent-[#2852E3]">
+                        </div>
+                        <h3 class="font-bold text-sm mt-4">Renault Clio</h3>
+                        <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">300 MAD / jour</p>
+                    </label>
+                    <label class="relative border border-[#D8E1EF] rounded-xl p-4">
+                        <div class="flex justify-between">
+                            <input type="radio" name="voiture" value="duster"
+                                class="absolute top-5 right-4 accent-[#2852E3]">
+                            <p class="bg-[#EEF2FF] text-[#2852E3] text-[10px] font-bold px-3 py-1 rounded">SUV</p>
+                        </div>
+                        <h3 class="font-bold text-sm mt-4">Dacia Duster</h3>
+                        <p class="text-[#3A9B68] text-[11px] mt-3">Disponible</p>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">450 MAD / jour</p>
+                    </label>
+                </div>
+                <h3 class=" border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm mb-6">Votre période de location</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="date-debut" class="block font-semibold mb-2">Date de début *</label>
+                        <input type="date" id="date-debut" value="2026-11-10"
+                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    </div>
+                    <div>
+                        <label for="date-fin" class="block font-semibold mb-2">Date de fin *</label>
+                        <input type="date" id="date-fin" value="2026-11-12"
+                            class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 ">
+                    </div>
+                </div>
+                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">
+                    Durée : 3 jours. Les dates de début et de fin sont incluses.
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-2">
+                    <button type="button"
+                        class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Recommencer</button>
+                    <button type="button"
+                        class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                </div>
+            </div>
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">02 / RÉCUPÉRATION</p>
+                <h2 class="text-xl lg:text-3xl font-bold mb-3">Où récupérer votre voiture ?</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Choisissez le lieu qui vous convient.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="agence" checked class="accent-[#2852E3]">
+                        <h3 class="font-bold text-sm mt-4">À l'agence</h3>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">Gratuit</p>
+                    </label>
+                    <label class="border border-[#D8E1EF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="aeroport" class="accent-[#2852E3]">
+                        <h3 class="font-bold text-sm mt-4">À l'aéroport</h3>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">+150 MAD</p>
+                    </label>
+                    <label class="border border-[#D8E1EF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="adresse" class="accent-[#2852E3]">
+                        <h3 class="font-bold text-sm mt-4">À une adresse</h3>
+                        <p class="text-[#2852E3] font-bold text-sm mt-4">+100 MAD</p>
+                    </label>
+                </div>
+                <h3 class="border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm">Informations de récupération</h3>
+                <div hidden>
+                    <label for="heure-recuperation" class="block font-semibold mb-2">Heure de récupération *</label>
+                    <input type="time" id="heure-recuperation" value="10:00"
+                        class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                </div>
+                <div hidden>
+                    <div>
+                        <label for="aeroport" class="block font-semibold mb-2">Aéroport *</label>
+                        <select id="aeroport" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 bg-white">
+                            <option value="casablanca">Casablanca — Mohammed V</option>
+                            <option value="marrakech">Marrakech — Ménara</option>
+                            <option value="rabat">Rabat — Salé</option>
+                            <option value="agadir">Agadir — Al Massira</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+                        <div>
+                            <label for="numero-vol" class="block font-semibold mb-2">Numéro du vol *</label>
+                            <input type="text" id="numero-vol" value="AT 205" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        </div>
+                        <div>
+                            <label for="heure-arrivee" class="block font-semibold mb-2">Heure d'arrivée *</label>
+                            <input type="time" id="heure-arrivee" value="10:30" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        </div>
+                    </div>
+                </div>
+                <div hidden>
+                    <div>
+                        <label for="ville" class="block font-semibold mb-2">Ville *</label>
+                        <input type="text" id="ville" value="Casablanca" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    </div>
+                    <div class="mt-5">
+                        <label for="adresse" class="block font-semibold mb-2">Adresse complète *</label>
+                        <input type="text" id="adresse" value="24, boulevard Zerktouni" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    </div>
+                    <div class="mt-5">
+                        <label for="heure-livraison" class="block font-semibold mb-2">Heure de livraison *</label>
+                        <input type="time" id="heure-livraison" value="10:00" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    </div>
+                </div>
+                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Le supplément de récupération est ajouté une seule fois au total.</div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-2">
+                    <button type="button"
+                        class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button"
+                        class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                </div>
+            </div>
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">03 / OPTIONS</p>
+                <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Les petits plus de votre location</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Ces options sont facultatives et facturées par jour.</p>
+                <div class="flex flex-col gap-4">
+                    <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-5 flex gap-4">
+                        <input type="checkbox" name="options" value="siege-bebe" checked class="accent-[#2852E3]">
+                        <div>
+                            <h3 class="font-bold text-sm">Siège bébé</h3>
+                            <p class="text-[#697C94] text-sm mt-3">30 MAD / jour · soit 90 MAD pour 3 jours</p>
+                        </div>
+                    </label>
+                    <label class="border border-[#D8E1EF] rounded-xl p-5 flex gap-4">
+                        <input type="checkbox" name="options" value="conducteur" class="accent-[#2852E3]">
+                        <div>
+                            <h3 class="font-bold text-sm">Conducteur supplémentaire</h3>
+                            <p class="text-[#697C94] text-sm mt-3">200 MAD / jour · soit 600 MAD pour 3 jours</p>
+                        </div>
+                    </label>
+                </div>
+                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Vous pouvez sélectionner une, deux ou aucune option.</div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-2">
+                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                </div>
+            </div>
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">04 / RÉCAPITULATIF</p>
+                <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Vérifiez votre demande</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Tout est prêt ? Vérifiez vos informations avant de confirmer.</p>
+                <div class="flex justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-sm mb-4">Véhicule et dates</h3>
+                        <p class="text-[#697C94] mb-2">Dacia Sandero · 250 MAD / jour</p>
+                        <p class="text-[#697C94]">Du 10 au 12 novembre 2026 · 3 jours</p>
+                    </div>
+                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 h-fit py-2 font-semibold">Modifier</button>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-sm mb-4">Récupération</h3>
+                        <p class="text-[#697C94] mb-2">Aéroport Mohammed V, Casablanca</p>
+                        <p class="text-[#697C94]">Vol AT 205 · arrivée à 10:30</p>
+                    </div>
+                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 h-fit py-2 font-semibold">Modifier</button>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-sm mb-4">Options</h3>
+                        <p class="text-[#697C94] mb-2">Siège bébé · 30 MAD / jour</p>
+                        <p class="text-[#697C94]">Sans conducteur supplémentaire</p>
+                    </div>
+                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 h-fit py-2 font-semibold">Modifier</button>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4">La confirmation transmet une demande simulée. Aucun paiement n'est demandé.</div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between gap-2">
+                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Confirmer</button>
+                </div>
+            </div>
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+                <p class="inline-block bg-[#E8F6EE] text-[#388867] text-[10px] font-semibold px-3 py-2 rounded-lg mb-5">✓ Demande confirmée</p>
+                <h2 class="text-xl lg:text-3xl font-bold mb-3">Votre demande est enregistrée.</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Merci ! Retrouvez ci-dessous le résumé de votre location.</p>
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">04 / RÉCAPITULATIF</p>
+                <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Vérifiez votre demande</h2>
+                <p class="text-[#697C94] mb-6 lg:text-[15px]">Tout est prêt ? Vérifiez vos informations avant de confirmer.</p>
+                <div>
+                    <h3 class="font-bold text-sm mb-3">Véhicule et dates</h3>
+                    <p class="text-[#697C94] mb-2">Dacia Sandero · 250 MAD / jour</p>
+                    <p class="text-[#697C94]">Du 10 au 12 novembre 2026 · 3 jours</p>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div>
+                    <h3 class="font-bold text-sm mb-3">Récupération</h3>
+                    <p class="text-[#697C94] mb-2">Aéroport Mohammed V, Casablanca</p>
+                    <p class="text-[#697C94]">Vol AT 205 · arrivée à 10:30</p>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div>
+                    <h3 class="font-bold text-sm mb-3">Options</h3>
+                    <p class="text-[#697C94] mb-2">Siège bébé · 30 MAD / jour</p>
+                    <p class="text-[#697C94]">Sans conducteur supplémentaire</p>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4">La confirmation transmet une demande simulée. Aucun paiement n'est demandé.</div>
+                <hr class="border-[#D8E1EF] my-6">
+                <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Nouvelle location</button>
+            </div>
+            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-6 lg:h-130">
+                <p class="text-[#2852E3] text-[15px] font-semibold mb-4">VOTRE LOCATION</p>
+                <h2 class="font-bold text-xl mb-3 lg:text-3xl">Dacia Sandero</h2>
+                <p class="text-[#697C94] text-[13px]">Citadine · 250 MAD / jour</p>
+                <hr class="border-[#D8E1EF] my-5">
+                <p class="font-bold text-[14px]">10 → 12 novembre 2026</p>
+                <p class="text-[#697C94] text-[15px] mt-4">3 jours · dates incluses</p>
+                <div class="mt-6 flex justify-between gap-3 text-[15px] ">
+                    <p class="text-[#697C94]">Véhicule · 3 × 250 MAD</p>
+                    <p class="font-bold whitespace-nowrap">750 MAD</p>
+                </div>
+                <div class="mt-5 flex justify-between gap-3 text-[15px] ">
+                    <p class="text-[#697C94]">Récupération</p>
+                    <p class="font-bold">Gratuite</p>
+                </div>
+                <hr class="border-[#D8E1EF] my-6">
+                <div class="flex justify-between items-center gap-3 text-[15px] ">
+                    <p class="font-bold">Total estimé</p>
+                    <p class="text-[#2852E3] text-2xl font-bold whitespace-nowrap">750 MAD</p>
+                </div>
+                <p class="text-[#697C94] text-[13px] mt-5">Frais de récupération facturés une seule fois.</p>
+                <div class="bg-[#F4F6FA] text-[#697C94] text-[13px] rounded-lg px-4 py-4 mt-5">Une demande, sans paiement en ligne.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="px-6 lg:px-35 py-4 text-xs text-gray-500">
+        <div class="flex flex-col sm:flex-row justify-between gap-3">
+            <p class="font-bold text-black">Atlas Auto · Parc automobile</p>
+            <p>Disponible · Louée · En maintenance</p>
+        </div>
+    </footer>
+</body>
+
+</html>
