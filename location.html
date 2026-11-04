@@ -41,30 +41,24 @@
         </section>
         <section class=" mb-10 lg:mx-15 bg-white text-[9px] py-4.5 rounded-xl border border-[#D8E1EF] flex gap-3.5 px-[25px] lg:text-[18px] lg:justify-around">
             <div class="flex gap-3 flex-col lg:flex-row ">
-                <p class="bg-[#2852E3] text-[#FFFFFF] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">
-                    1</p>
-                <p class="text-[#2852E3] lg:py-3 lg:text-[13px]">Véhicule</p>
+                <p id="one" class="bg-[#2852E3] text-[#FFFFFF] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">1</p>
+                <p id= "vhl_name" class="text-[#2852E3] lg:py-3 lg:text-[13px]">Véhicule</p>
             </div>
             <div class="flex gap-3 flex-col lg:flex-row">
-                <p class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">
-                    2</p>
-                <p class="text-[#697C94] lg:py-3 lg:text-[13px]">Récupération</p>
+                <p id="two" class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]">2</p>
+                <p  id= "recup_name" class="text-[#697C94] lg:py-3 lg:text-[13px]">Récupération</p>
             </div>
             <div class="flex gap-3 flex-col lg:flex-row">
-                <p
-                    class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">
-                    3</p>
-                <p class="text-[#697C94] lg:py-3 lg:text-[13px]">Options</p>
+                <p id="three" class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">3</p>
+                <p  id= "opts_name" class="text-[#697C94] lg:py-3 lg:text-[13px]">Options</p>
             </div>
             <div class="flex gap-3 flex-col lg:flex-row">
-                <p
-                    class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">
-                    4</p>
-                <p class="text-[#697C94] lg:py-3 lg:text-[13px] ">Récapitulatif</p>
+                <p id ="four" class="bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px] ">4</p>
+                <p id="recapitulatif" class="text-[#697C94] lg:py-3 lg:text-[13px] ">Récapitulatif</p>
             </div>
         </section>
         <section class="grid gap-3 lg:mx-15 lg:grid-cols-3">
-            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2">
+            <div id="vehicule_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">01 / VÉHICULE</p>
                 <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Choisissez votre véhicule</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Sélectionnez une voiture disponible et votre période de
@@ -86,50 +80,52 @@
                         <label for="date-debut" class="block font-semibold mb-2">Date de début *</label>
                         <input type="date" id="date-debut"
                             class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
+                            <p id="erreur-date-debut" class="text-red-500 text-xs mt-2"></p>
                     </div>
                     <div>
                         <label for="date-fin" class="block font-semibold mb-2">Date de fin *</label>
                         <input type="date" id="date-fin"
                             class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
+                            <p id="erreur-date-fin" class="text-red-500 text-xs mt-2"></p>
                     </div>
                 </div>
                 <div id = "duree" class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Les dates de début et de fin sont incluses.</div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between gap-2">
-                    <button type="button"
+                    <button type="button" id="recommencer_1"
                         class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Recommencer</button>
-                    <button type="button"
+                    <button type="button" id="suivant_1"
                         class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
-            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+            <div id = "recuperation_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">02 / RÉCUPÉRATION</p>
                 <h2 class="text-xl lg:text-3xl font-bold mb-3">Où récupérer votre voiture ?</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Choisissez le lieu qui vous convient.</p>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4">
-                        <input type="radio" name="recuperation" value="agence" checked class="accent-[#2852E3]">
+                    <label id ="choix_agence" class="border border-[#D8E1EF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="agence" class="accent-[#2852E3]" required>
                         <h3 class="font-bold text-sm mt-4">À l'agence</h3>
                         <p class="text-[#2852E3] font-bold text-sm mt-4">Gratuit</p>
                     </label>
-                    <label class="border border-[#D8E1EF] rounded-xl p-4">
-                        <input type="radio" name="recuperation" value="aeroport" class="accent-[#2852E3]">
+                    <label id ="choix_aeroport" class="border border-[#D8E1EF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="aeroport" class="accent-[#2852E3]"required>
                         <h3 class="font-bold text-sm mt-4">À l'aéroport</h3>
                         <p class="text-[#2852E3] font-bold text-sm mt-4">+150 MAD</p>
                     </label>
-                    <label class="border border-[#D8E1EF] rounded-xl p-4">
-                        <input type="radio" name="recuperation" value="adresse" class="accent-[#2852E3]">
+                    <label id ="choix_adresse" class="border border-[#D8E1EF] rounded-xl p-4">
+                        <input type="radio" name="recuperation" value="adresse" class="accent-[#2852E3]"required>
                         <h3 class="font-bold text-sm mt-4">À une adresse</h3>
                         <p class="text-[#2852E3] font-bold text-sm mt-4">+100 MAD</p>
                     </label>
                 </div>
                 <h3 class="border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm">Informations de récupération</h3>
-                <div hidden>
+                <div id = "agence_heure" hidden>
                     <label for="heure-recuperation" class="block font-semibold mb-2">Heure de récupération *</label>
                     <input type="time" id="heure-recuperation" value="10:00"
                         class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
                 </div>
-                <div hidden>
+                <div id = "aeroport_heure" hidden>
                     <div>
                         <label for="aeroport" class="block font-semibold mb-2">Aéroport *</label>
                         <select id="aeroport" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 bg-white">
@@ -150,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div hidden>
+                <div id="adresse_heure" hidden>
                     <div>
                         <label for="ville" class="block font-semibold mb-2">Ville *</label>
                         <input type="text" id="ville" value="Casablanca" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
@@ -173,7 +169,7 @@
                         class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
-            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+            <div id = "options_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">03 / OPTIONS</p>
                 <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Les petits plus de votre location</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Ces options sont facultatives et facturées par jour.</p>
@@ -200,7 +196,7 @@
                     <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
-            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+            <div id = "recapitulatif_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">04 / RÉCAPITULATIF</p>
                 <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Vérifiez votre demande</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Tout est prêt ? Vérifiez vos informations avant de confirmer.</p>
@@ -276,24 +272,24 @@
                 <p id = "days" class="text-[#697C94] text-[15px] mt-4">__</p>
                 <div class="mt-6 flex justify-between gap-3 text-[15px] ">
                     <p id="numberofprix" class="text-[#697C94]">__</p>
-                    <p id = "totalprice" class="font-bold whitespace-nowrap">__</p>
+                    <p id = "totalprice" class="font-bold ">__</p>
                 </div>
                 <div id="recap-siege-bebe" class="mt-5 flex justify-between gap-3 text-[15px]">
-                    <p id="siege-bebe-prix" class="text-[#697C94]">Siège bébé · 3 × 30 MAD</p>
-                    <p id="siege-bebe-total" class="font-bold whitespace-nowrap">90 MAD</p>
+                    <p id="siege-bebe-prix" class="text-[#697C94]">__</p>
+                    <p id="siege-bebe-total" class="font-bold ">__</p>
                 </div>
                 <div id="recap-conducteur" class="mt-5 flex justify-between gap-3 text-[15px]">
-                    <p id="conducteur-prix" class="text-[#697C94]">Conducteur supplémentaire · 3 × 200 MAD</p>
-                    <p id="conducteur-total" class="font-bold whitespace-nowrap">600 MAD</p>
+                    <p id="conducteur-prix" class="text-[#697C94]">__</p>
+                    <p id="conducteur-total" class="font-bold ">__</p>
                 </div>
                 <div class="mt-5 flex justify-between gap-3 text-[15px] ">
-                    <p class="text-[#697C94]">Récupération</p>
-                    <p class="font-bold">Gratuite</p>
+                    <p id="recup_left" class="text-[#697C94]">__</p>
+                    <p id="prix_recup" class="font-bold">__</p>
                 </div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between items-center gap-3 text-[15px] ">
                     <p class="font-bold">Total estimé</p>
-                    <p id="total" class="text-[#2852E3] text-2xl font-bold whitespace-nowrap">__</p>
+                    <p id="total" class="text-[#2852E3] text-2xl font-bold">__</p>
                 </div>
                 <p class="text-[#697C94] text-[13px] mt-5">Frais de récupération facturés une seule fois.</p>
                 <div class="bg-[#F4F6FA] text-[#697C94] text-[13px] rounded-lg px-4 py-4 mt-5">Une demande, sans paiement en ligne.</div>
