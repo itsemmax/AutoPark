@@ -64,7 +64,15 @@ let erreur_heure_arrivee = document.querySelector("#erreur-heure-arrivee");
 let erreur_ville = document.querySelector("#erreur-ville");
 let erreur_adresse = document.querySelector("#erreur-adresse");
 let erreur_heure_livraison = document.querySelector("#erreur-heure-livraison");
-
+let modifier_vehicule = document.querySelector("#modifier_vehicule");
+let modifier_recuperation = document.querySelector("#modifier_recuperation");
+let modifier_options = document.querySelector("#modifier_options");
+let recap_voiture = document.querySelector("#recap_voiture");
+let recap_dates = document.querySelector("#recap_dates");
+let recap_mode = document.querySelector("#recap_mode");
+let recap_infos = document.querySelector("#recap_infos");
+let recap_option1 = document.querySelector("#recap_option1");
+let recap_option2 = document.querySelector("#recap_option2");
 
 
 if(!localStorage.getItem("voitures")){
@@ -653,6 +661,52 @@ function afficher_progression(){
         }
     });
 }
+modifier_vehicule.addEventListener("click",()=>{
+    selectedConfig.etape = 1;
+    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+    afficher_perpage();
+});
+
+modifier_recuperation.addEventListener("click",()=>{
+    selectedConfig.etape = 2;
+    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+    afficher_perpage();
+});
+
+modifier_options.addEventListener("click",()=>{
+    selectedConfig.etape = 3;
+    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+    afficher_perpage();
+});
+
+function afficher_recapitulatif(){
+    if(!voiture_obj || !selectedConfig.dateDebut || !selectedConfig.dateFin) return;
+
+    let debut = new Date(selectedConfig.dateDebut);
+    let fin = new Date(selectedConfig.dateFin);
+    let jours = Math.round((fin - debut) / 86400000) + 1;
+
+    recap_voiture.textContent = `${voiture_obj.marque} ${voiture_obj.modele} · ${voiture_obj.prixJour} MAD / jour`;
+    recap_dates.textContent = `Du ${selectedConfig.dateDebut} au ${selectedConfig.dateFin} · ${jours} jours`;
+
+    if(selectedConfig.modeRecuperation === "agence"){
+        recap_mode.textContent = "À l'agence";
+        recap_infos.textContent = `Heure de récupération : ${selectedConfig.recuperation.heureRecuperation}`;
+    }
+    else if(selectedConfig.modeRecuperation === "aeroport"){
+        let aeroport = aeroport_select.options[aeroport_select.selectedIndex].textContent;
+        recap_mode.textContent = aeroport;
+        recap_infos.textContent = `Vol ${selectedConfig.recuperation.numeroVol} · arrivée à ${selectedConfig.recuperation.heureArrivee}`;
+    }
+    else if(selectedConfig.modeRecuperation === "adresse"){
+        recap_mode.textContent = `${selectedConfig.recuperation.adresse}, ${selectedConfig.recuperation.ville}`;
+        recap_infos.textContent = `Heure de livraison : ${selectedConfig.recuperation.heureLivraison}`;
+    }
+
+    recap_option1.textContent = selectedConfig.options.siegeBebe ? "Siège bébé · 30 MAD / jour" : "Sans siège bébé";
+    recap_option2.textContent = selectedConfig.options.conducteurSupplementaire ? "Conducteur supplémentaire · 200 MAD / jour" : "Sans conducteur supplémentaire";
+}
+
 function afficher_perpage(){
   afficher_progression();
   afficher_recuperation();
@@ -685,6 +739,7 @@ function afficher_perpage(){
       options_part.hidden = true;
       recapitulatif_part.hidden = false;
       confirmation_page.hidden = true;
+      afficher_recapitulatif();
   }
   else if(selectedConfig.etape === 5){
       vehicule_part.hidden = true;
