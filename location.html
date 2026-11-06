@@ -121,8 +121,8 @@
                 <h3 class="border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm">Informations de récupération</h3>
                 <div id = "agence_heure" hidden>
                     <label for="heure-recuperation" class="block font-semibold mb-2">Heure de récupération *</label>
-                    <input type="time" id="heure-recuperation" 
-                        class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    <input type="time" id="heure-recuperation" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                    <p id="erreur-heure-recuperation" class="text-red-500 text-xs mt-2"></p>
                 </div>
                 <div id = "aeroport_heure" hidden>
                     <div>
@@ -134,15 +134,18 @@
                             <option value="rabat">Rabat — Salé</option>
                             <option value="agadir">Agadir — Al Massira</option>
                         </select>
+                        <p id="erreur-aeroport" class="text-red-500 text-xs mt-2"></p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
                         <div>
                             <label for="numero-vol" class="block font-semibold mb-2">Numéro du vol *</label>
                             <input type="text" id="numero-vol"  placeholder="Ex : AT 205" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
+                            <p id="erreur-numero-vol" class="text-red-500 text-xs mt-2"></p>
                         </div>
                         <div>
                             <label for="heure-arrivee" class="block font-semibold mb-2">Heure d'arrivée *</label>
                             <input type="time" id="heure-arrivee" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
+                            <p id="erreur-heure-arrivee" class="text-red-500 text-xs mt-2"></p>
                         </div>
                     </div>
                 </div>
@@ -150,14 +153,17 @@
                     <div>
                         <label for="ville" class="block font-semibold mb-2">Ville *</label>
                         <input type="text" id="ville" placeholder="Ex : Casablanca" required class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <p id="erreur-ville" class="text-red-500 text-xs mt-2"></p>
                     </div>
                     <div class="mt-5">
                         <label for="adresse" class="block font-semibold mb-2">Adresse complète *</label>
                         <input type="text" id="adresse" placeholder="Ex : 24, boulevard Zerktouni" required class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <p id="erreur-adresse" class="text-red-500 text-xs mt-2"></p>
                     </div>
                     <div class="mt-5">
                         <label for="heure-livraison" class="block font-semibold mb-2">Heure de livraison *</label>
                         <input type="time" id="heure-livraison" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
+                        <p id="erreur-heure-livraison" class="text-red-500 text-xs mt-2"></p>
                     </div>
                 </div>
                 <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Le supplément de récupération est ajouté une seule fois au total.</div>
