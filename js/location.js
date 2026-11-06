@@ -73,6 +73,13 @@ let recap_mode = document.querySelector("#recap_mode");
 let recap_infos = document.querySelector("#recap_infos");
 let recap_option1 = document.querySelector("#recap_option1");
 let recap_option2 = document.querySelector("#recap_option2");
+let confirmation_page = document.querySelector("#confirmation_page");
+let confirmation_voiture = document.querySelector("#confirmation_voiture");
+let confirmation_dates = document.querySelector("#confirmation_dates");
+let confirmation_mode = document.querySelector("#confirmation_mode");
+let confirmation_infos = document.querySelector("#confirmation_infos");
+let confirmation_option1 = document.querySelector("#confirmation_option1");
+let confirmation_option2 = document.querySelector("#confirmation_option2");
 
 
 if(!localStorage.getItem("voitures")){
@@ -633,10 +640,9 @@ confirm.addEventListener("click",()=>{
   afficher_perpage();
 })
 nouvelle_loc.addEventListener("click",()=>{
-  selectedConfig.etape=1;
-  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
-  afficher_perpage();
-})
+    sessionStorage.removeItem("location");
+    window.location.reload();
+});
 function afficher_progression(){
     let cercles = [one,two,three,four];
     let titres = [vhl_name,recup_name,opts_name,recapitulatif];
@@ -747,6 +753,13 @@ function afficher_perpage(){
       options_part.hidden = true;
       recapitulatif_part.hidden = true;
       confirmation_page.hidden = false;
+      afficher_recapitulatif();
+      confirmation_voiture.textContent = recap_voiture.textContent;
+      confirmation_dates.textContent = recap_dates.textContent;
+      confirmation_mode.textContent = recap_mode.textContent;
+      confirmation_infos.textContent = recap_infos.textContent;
+      confirmation_option1.textContent = recap_option1.textContent;
+      confirmation_option2.textContent = recap_option2.textContent;
   }
   if(voiture_obj){
     marque.textContent = `${voiture_obj.marque} ${voiture_obj.modele}`;
