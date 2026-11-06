@@ -489,11 +489,31 @@ precedent_recup.addEventListener("click",()=>{
   recup_name.className = "text-[#697C94] lg:py-3 lg:text-[13px]";
   afficher_perpage();
 })
-suivant_recup.addEventListener("click",()=>{
-  selectedConfig.etape=3;
+suivant_recup.addEventListener("click",(event)=>{
+  event.preventDefault();
+
+  if(selectedConfig.modeRecuperation === "agence"){
+    if(!heure_recuperation.value){
+        alert("Veuillez choisir l'heure de récupération.");
+        return;
+    }
+  }
+  else if(selectedConfig.modeRecuperation === "aeroport"){
+    if(!aeroport_select.value || !numero_vol.value.trim() || !heure_arrivee.value){
+        alert("Veuillez remplir toutes les informations de l'aéroport.");
+        return;
+    }
+  }
+  else if(selectedConfig.modeRecuperation === "adresse"){
+    if(!ville.value.trim() || !adresse_input.value.trim() || !heure_livraison.value){
+        alert("Veuillez remplir toutes les informations de livraison.");
+        return;
+    }
+  }
+  selectedConfig.etape = 3;
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_perpage();
-})
+});
 siege_bebe_checkbox.addEventListener("change",()=>{
     let checked = siege_bebe_checkbox.querySelector("input").checked;
     selectedConfig.options.siegeBebe = checked;
@@ -535,6 +555,7 @@ precedent_option.addEventListener("click",()=>{
 })
 suivant_option.addEventListener("click",()=>{
   selectedConfig.etape=4;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_perpage();
 })
 precedent_recap.addEventListener("click",()=>{
