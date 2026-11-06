@@ -94,8 +94,7 @@
                 <div class="flex justify-between gap-2">
                     <button type="button" id="recommencer_1"
                         class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Recommencer</button>
-                    <button type="button" id="suivant_1"
-                        class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                    <button type="button" id="suivant_vhl" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
             <div id = "recuperation_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
@@ -122,13 +121,14 @@
                 <h3 class="border-t border-[#D8E1EF] my-6 pt-5 font-bold text-sm">Informations de récupération</h3>
                 <div id = "agence_heure" hidden>
                     <label for="heure-recuperation" class="block font-semibold mb-2">Heure de récupération *</label>
-                    <input type="time" id="heure-recuperation" value="10:00"
+                    <input type="time" id="heure-recuperation" 
                         class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
                 </div>
                 <div id = "aeroport_heure" hidden>
                     <div>
                         <label for="aeroport" class="block font-semibold mb-2">Aéroport *</label>
-                        <select id="aeroport" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 bg-white">
+                        <select id="aeroport" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3 bg-white" required>
+                            <option value="" disabled selected>Choisissez un aéroport</option>
                             <option value="casablanca">Casablanca — Mohammed V</option>
                             <option value="marrakech">Marrakech — Ménara</option>
                             <option value="rabat">Rabat — Salé</option>
@@ -138,35 +138,33 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
                         <div>
                             <label for="numero-vol" class="block font-semibold mb-2">Numéro du vol *</label>
-                            <input type="text" id="numero-vol" value="AT 205" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                            <input type="text" id="numero-vol"  placeholder="Ex : AT 205" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
                         </div>
                         <div>
                             <label for="heure-arrivee" class="block font-semibold mb-2">Heure d'arrivée *</label>
-                            <input type="time" id="heure-arrivee" value="10:30" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                            <input type="time" id="heure-arrivee" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
                         </div>
                     </div>
                 </div>
                 <div id="adresse_heure" hidden>
                     <div>
                         <label for="ville" class="block font-semibold mb-2">Ville *</label>
-                        <input type="text" id="ville" value="Casablanca" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <input type="text" id="ville" placeholder="Ex : Casablanca" required class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
                     </div>
                     <div class="mt-5">
                         <label for="adresse" class="block font-semibold mb-2">Adresse complète *</label>
-                        <input type="text" id="adresse" value="24, boulevard Zerktouni" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <input type="text" id="adresse" placeholder="Ex : 24, boulevard Zerktouni" required class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
                     </div>
                     <div class="mt-5">
                         <label for="heure-livraison" class="block font-semibold mb-2">Heure de livraison *</label>
-                        <input type="time" id="heure-livraison" value="10:00" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3">
+                        <input type="time" id="heure-livraison" class="w-full border border-[#D8E1EF] rounded-lg px-4 py-3" required>
                     </div>
                 </div>
                 <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Le supplément de récupération est ajouté une seule fois au total.</div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between gap-2">
-                    <button type="button"
-                        class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
-                    <button type="button"
-                        class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                    <button type="button" id = "precedent_recup" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button" id = "suivant_recup" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
             <div id = "options_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
@@ -174,14 +172,14 @@
                 <h2 class="text-xl lg:text-2xl font-bold mb-3 lg:text-3xl">Les petits plus de votre location</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Ces options sont facultatives et facturées par jour.</p>
                 <div class="flex flex-col gap-4">
-                    <label class="border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-5 flex gap-4">
-                        <input type="checkbox" name="options" value="siege-bebe" checked class="accent-[#2852E3]">
+                    <label id="siege_bebe_checkbox" class="border border-[#D8E1EF] rounded-xl p-5 flex gap-4">
+                        <input type="checkbox" name="options" value="siege-bebe" class="accent-[#2852E3]">
                         <div>
                             <h3 class="font-bold text-sm">Siège bébé</h3>
                             <p class="text-[#697C94] text-sm mt-3">30 MAD / jour · soit 90 MAD pour 3 jours</p>
                         </div>
                     </label>
-                    <label class="border border-[#D8E1EF] rounded-xl p-5 flex gap-4">
+                    <label id="conducteur_checkbox" class="border border-[#D8E1EF] rounded-xl p-5 flex gap-4">
                         <input type="checkbox" name="options" value="conducteur" class="accent-[#2852E3]">
                         <div>
                             <h3 class="font-bold text-sm">Conducteur supplémentaire</h3>
@@ -192,8 +190,8 @@
                 <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4 mt-5">Vous pouvez sélectionner une, deux ou aucune option.</div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between gap-2">
-                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
-                    <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
+                    <button type="button" id = "precedent_option" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button" id = "suivant_option" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Suivant</button>
                 </div>
             </div>
             <div id = "recapitulatif_part" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
@@ -230,11 +228,11 @@
                 <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4">La confirmation transmet une demande simulée. Aucun paiement n'est demandé.</div>
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="flex justify-between gap-2">
-                    <button type="button" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
-                    <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Confirmer</button>
+                    <button type="button" id = "precedent_recap" class="border border-[#D8E1EF] rounded-lg px-5 lg:px-7 py-3 font-semibold">Précédent</button>
+                    <button type="button" id = "confirm" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Confirmer</button>
                 </div>
             </div>
-            <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
+            <div id = "confirmation_page" class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-7 lg:col-span-2" hidden>
                 <p class="inline-block bg-[#E8F6EE] text-[#388867] text-[10px] font-semibold px-3 py-2 rounded-lg mb-5">✓ Demande confirmée</p>
                 <h2 class="text-xl lg:text-3xl font-bold mb-3">Votre demande est enregistrée.</h2>
                 <p class="text-[#697C94] mb-6 lg:text-[15px]">Merci ! Retrouvez ci-dessous le résumé de votre location.</p>
@@ -261,7 +259,7 @@
                 <hr class="border-[#D8E1EF] my-6">
                 <div class="bg-[#EEF2FF] text-[#2852E3] rounded-lg px-4 py-4">La confirmation transmet une demande simulée. Aucun paiement n'est demandé.</div>
                 <hr class="border-[#D8E1EF] my-6">
-                <button type="button" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Nouvelle location</button>
+                <button type="button" id="nouvelle_loc" class="bg-[#2852E3] text-white rounded-lg px-8 lg:px-16 py-3 font-semibold">Nouvelle location</button>
             </div>
             <div class="bg-white border border-[#D8E1EF] rounded-xl p-5 lg:p-6 lg:h-130">
                 <p class="text-[#2852E3] text-[15px] font-semibold mb-4">VOTRE LOCATION</p>
