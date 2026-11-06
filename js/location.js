@@ -471,6 +471,8 @@ heure_livraison.addEventListener("change",()=>{
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
 });
 function afficher_recuperation(){
+    recup_left.textContent = "__";
+    prix_recup.textContent = "__";
     agence_heure.hidden = true;
     aeroport_heure.hidden = true;
     adresse_heure.hidden = true;
@@ -487,8 +489,10 @@ function afficher_recuperation(){
         agence_heure.hidden = false;
         choix_agence.querySelector("input").checked = true;
         choix_agence.className = "border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4";
-        recup_left.textContent = "Récupération";
-        prix_recup.textContent = "Gratuite";
+        if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin){
+          recup_left.textContent = "Récupération";
+          prix_recup.textContent = "Gratuite";
+        }
     }
     else if(selectedConfig.modeRecuperation === "aeroport"){
         aeroport_heure.hidden = false;
@@ -633,14 +637,15 @@ precedent_recap.addEventListener("click",()=>{
 })
 confirm.addEventListener("click",()=>{
   selectedConfig.etape=5;
+  voiture_obj.statut = "Louée";
+  localStorage.setItem("voitures",JSON.stringify(voitures));
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_perpage();
 })
 nouvelle_loc.addEventListener("click",()=>{
-  selectedConfig.etape=1;
-  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
-  afficher_perpage();
-})
+    sessionStorage.removeItem("location");
+    window.location.reload();
+});
 function afficher_progression(){
     let cercles = [one,two,three,four];
     let titres = [vhl_name,recup_name,opts_name,recapitulatif];
