@@ -18,7 +18,7 @@ let siege_bebe_prix = document.querySelector("#siege-bebe-prix");
 let siege_bebe_total = document.querySelector("#siege-bebe-total");
 let conducteur_prix = document.querySelector("#conducteur-prix");
 let conducteur_total = document.querySelector("#conducteur-total");
-let suivant_1 = document.querySelector("#suivant_1");
+let suivant_vhl = document.querySelector("#suivant_vhl");
 let recommencer_1 = document.querySelector("#recommencer_1");
 let vehicule_part = document.querySelector("#vehicule_part");
 let recuperation_part = document.querySelector("#recuperation_part");
@@ -48,6 +48,17 @@ let heure_arrivee = document.querySelector("#heure-arrivee");
 let ville = document.querySelector("#ville");
 let adresse_input = document.querySelector("#adresse");
 let heure_livraison = document.querySelector("#heure-livraison");
+let precedent_recup = document.querySelector("#precedent_recup");
+let suivant_recup = document.querySelector("#suivant_recup");
+let precedent_option = document.querySelector("#precedent_option");
+let suivant_option = document.querySelector("#suivant_option");
+let precedent_recap = document.querySelector("#precedent_recap");
+let confirm = document.querySelector("#confirm");
+let nouvelle_loc = document.querySelector("#nouvelle_loc");
+let siege_bebe_checkbox = document.querySelector("#siege_bebe_checkbox");
+let conducteur_checkbox = document.querySelector("#conducteur_checkbox");
+
+
 
 if(!localStorage.getItem("voitures")){
     localStorage.setItem("voitures",JSON.stringify(voituresInitiales));
@@ -158,6 +169,21 @@ if(selectedConfig){
   voiture_obj = voitures.find(voiture=>voiture.id === selectedConfig.voitureId) || null;
   date_debut.value = selectedConfig.dateDebut;
   date_fin.value = selectedConfig.dateFin;
+  heure_recuperation.value = selectedConfig.recuperation.heureRecuperation;
+  aeroport_select.value = selectedConfig.recuperation.aeroport;
+  numero_vol.value = selectedConfig.recuperation.numeroVol;
+  heure_arrivee.value = selectedConfig.recuperation.heureArrivee;
+  ville.value = selectedConfig.recuperation.ville;
+  adresse_input.value = selectedConfig.recuperation.adresse;
+  heure_livraison.value = selectedConfig.recuperation.heureLivraison;
+  siege_bebe_checkbox.querySelector("input").checked = selectedConfig.options.siegeBebe;
+  if(selectedConfig.options.siegeBebe){
+    siege_bebe_checkbox.className = "border border-[#2852E3] rounded-xl p-5 flex gap-4";
+  }
+  conducteur_checkbox.querySelector("input").checked = selectedConfig.options.conducteurSupplementaire;
+  if(selectedConfig.options.conducteurSupplementaire){
+      conducteur_checkbox.className = "border border-[#2852E3] rounded-xl p-5 flex gap-4";
+  }
 }
 
 function calculerJours(){
@@ -165,18 +191,32 @@ function calculerJours(){
   let fin = new Date(selectedConfig.dateFin);
   let jours = Math.round((fin - debut) / 86400000) + 1;
   let frais = 0;
+  if(voiture_obj){
+    numberofprix.textContent = `Véhicule · ${jours} × ${voiture_obj.prixJour} MAD`;
+    total_price.textContent = `${jours * voiture_obj.prixJour} MAD`;
+  }
   if(selectedConfig.modeRecuperation === "aeroport"){
       frais = 150;
   }
   else if(selectedConfig.modeRecuperation === "adresse"){
       frais = 100;
   }
+  siege_bebe.hidden = !selectedConfig.options.siegeBebe;
+  conducteur.hidden = !selectedConfig.options.conducteurSupplementaire;
+  if(selectedConfig.options.siegeBebe){
+      siege_bebe_prix.textContent = `Siège bébé · ${jours} × 30 MAD`;
+      siege_bebe_total.textContent = `${jours * 30} MAD`;
+      frais += jours * 30;
+  }
+  if(selectedConfig.options.conducteurSupplementaire){
+      conducteur_prix.textContent = `Conducteur · ${jours} × 200 MAD`;
+      conducteur_total.textContent = `${jours * 200} MAD`;
+      frais += jours * 200;
+  }
   let total = jours * voiture_obj.prixJour + frais;
 
   days.textContent = `${jours} jours · dates incluses`;
   duree.textContent = `Durée : ${jours} jours. Les dates de début et de fin sont incluses.`;
-  numberofprix.textContent = `Véhicule · ${jours} × ${voiture_obj.prixJour} MAD`;
-  total_price.textContent = `${total} MAD`;
   total_car.textContent = `${total} MAD`;
 }
 
@@ -256,7 +296,7 @@ function afficher(){
     cards.append(label);
   })
 }
-suivant_1.addEventListener("click",()=>{
+suivant_vhl.addEventListener("click",()=>{
     if(!voiture_obj){
         alert("Veuillez sélectionner une voiture.");
         return;
@@ -316,10 +356,35 @@ recommencer_1.addEventListener("click",()=>{
     numberofprix.textContent = "__";
     total_price.textContent = "__";
     total_car.textContent = "__";
+    recup_left.textContent = "__";
+    prix_recup.textContent = "__";
+    siege_bebe_prix.textContent = "__";
+    siege_bebe_total.textContent = "__";
+    conducteur_prix.textContent = "__";
+    conducteur_total.textContent = "__";
     sessionStorage.setItem("location",JSON.stringify(selectedConfig));
     afficher_perpage();
 });
+function reset_recuperation(){
+    selectedConfig.recuperation = {
+        heureRecuperation: "",
+        aeroport: "",
+        numeroVol: "",
+        heureArrivee: "",
+        ville: "",
+        adresse: "",
+        heureLivraison: ""
+    };
+    heure_recuperation.value = "";
+    aeroport_select.value = "";
+    numero_vol.value = "";
+    heure_arrivee.value = "";
+    ville.value = "";
+    adresse_input.value = "";
+    heure_livraison.value = "";
+}
 choix_agence.addEventListener("change",()=>{
+  reset_recuperation();
   selectedConfig.modeRecuperation = "agence";
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_recuperation();
@@ -328,6 +393,7 @@ choix_agence.addEventListener("change",()=>{
   }
 })
 choix_aeroport.addEventListener("change",()=>{
+  reset_recuperation();
   selectedConfig.modeRecuperation = "aeroport";
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_recuperation();
@@ -336,12 +402,13 @@ choix_aeroport.addEventListener("change",()=>{
   }
 })
 choix_adresse.addEventListener("change",()=>{
-    selectedConfig.modeRecuperation = "adresse";
-    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
-    afficher_recuperation();
-    if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin && selectedConfig.dateFin >= selectedConfig.dateDebut){
-        calculerJours();
-    }
+  reset_recuperation();
+  selectedConfig.modeRecuperation = "adresse";
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  afficher_recuperation();
+  if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin && selectedConfig.dateFin >= selectedConfig.dateDebut){
+      calculerJours();
+  }
 });
 heure_recuperation.addEventListener("change",()=>{
     selectedConfig.recuperation.heureRecuperation = heure_recuperation.value;
@@ -390,102 +457,179 @@ function afficher_recuperation(){
     choix_aeroport.querySelector("input").checked = false;
     choix_adresse.querySelector("input").checked = false;
 
-    recup_left.textContent = "Récupération";
-
     if(selectedConfig.modeRecuperation === "agence"){
         agence_heure.hidden = false;
         choix_agence.querySelector("input").checked = true;
         choix_agence.className = "border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4";
+        recup_left.textContent = "Récupération";
         prix_recup.textContent = "Gratuite";
     }
     else if(selectedConfig.modeRecuperation === "aeroport"){
         aeroport_heure.hidden = false;
         choix_aeroport.querySelector("input").checked = true;
         choix_aeroport.className = "border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4";
+        recup_left.textContent = "Récupération";
         prix_recup.textContent = "150 MAD";
     }
     else if(selectedConfig.modeRecuperation === "adresse"){
         adresse_heure.hidden = false;
         choix_adresse.querySelector("input").checked = true;
         choix_adresse.className = "border border-[#2852E3] bg-[#FAFBFF] rounded-xl p-4";
+        recup_left.textContent = "Récupération";
         prix_recup.textContent = "100 MAD";
     }
 }
+precedent_recup.addEventListener("click",()=>{
+  selectedConfig.etape=1;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  one.textContent = "1";
+  one.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
+  vhl_name.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
+  two.className = "bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]";
+  recup_name.className = "text-[#697C94] lg:py-3 lg:text-[13px]";
+  afficher_perpage();
+})
+suivant_recup.addEventListener("click",()=>{
+  selectedConfig.etape=3;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  afficher_perpage();
+})
+siege_bebe_checkbox.addEventListener("change",()=>{
+    let checked = siege_bebe_checkbox.querySelector("input").checked;
+    selectedConfig.options.siegeBebe = checked;
+    if(checked){
+        siege_bebe_checkbox.className = "border border-[#2852E3] rounded-xl p-5 flex gap-4";
+    }
+    else{
+        siege_bebe_checkbox.className = "border border-[#D8E1EF] rounded-xl p-5 flex gap-4";
+    }
+    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+    if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin){
+        calculerJours();
+    }
+});
+
+conducteur_checkbox.addEventListener("change",()=>{
+    let checked = conducteur_checkbox.querySelector("input").checked;
+    selectedConfig.options.conducteurSupplementaire = checked;
+    if(checked){
+        conducteur_checkbox.className = "border border-[#2852E3] rounded-xl p-5 flex gap-4";
+    }
+    else{
+        conducteur_checkbox.className = "border border-[#D8E1EF] rounded-xl p-5 flex gap-4";
+    }
+    sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+    if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin){
+        calculerJours();
+    }
+});
+precedent_option.addEventListener("click",()=>{
+  selectedConfig.etape=2;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  two.textContent = "2";
+  two.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
+  recup_name.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
+  three.className = "bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]";
+  opts_name.className = "text-[#697C94] lg:py-3 lg:text-[13px]";
+  afficher_perpage();
+})
+suivant_option.addEventListener("click",()=>{
+  selectedConfig.etape=4;
+  afficher_perpage();
+})
+precedent_recap.addEventListener("click",()=>{
+  selectedConfig.etape=3;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  three.textContent = "3";
+  three.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
+  opts_name.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
+  four.className = "bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-[50%] h-[40px] w-[40px]";
+  recapitulatif.className = "text-[#697C94] lg:py-3 lg:text-[13px]";
+  afficher_perpage();
+})
+confirm.addEventListener("click",()=>{
+  selectedConfig.etape=5;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  afficher_perpage();
+})
+nouvelle_loc.addEventListener("click",()=>{
+  selectedConfig.etape=1;
+  sessionStorage.setItem("location",JSON.stringify(selectedConfig));
+  afficher_perpage();
+})
+function afficher_progression(){
+    let cercles = [one,two,three,four];
+    let titres = [vhl_name,recup_name,opts_name,recapitulatif];
+
+    cercles.forEach((cercle,index)=>{
+        let numero = index + 1;
+
+        if(numero < selectedConfig.etape){
+            cercle.textContent = "✓";
+            cercle.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
+            titres[index].className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
+        }
+        else if(numero === selectedConfig.etape){
+            cercle.textContent = numero;
+            cercle.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
+            titres[index].className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
+        }
+        else{
+            cercle.textContent = numero;
+            cercle.className = "bg-[#F4F6FA] text-[#697C94] flex items-center justify-center rounded-full h-[40px] w-[40px]";
+            titres[index].className = "text-[#697C94] lg:py-3 lg:text-[13px]";
+        }
+    });
+}
 function afficher_perpage(){
+  afficher_progression();
+  afficher_recuperation();
   if(selectedConfig.etape === 1){
     vehicule_part.hidden = false;
     recuperation_part.hidden = true;
     options_part.hidden = true;
     recapitulatif_part.hidden = true;
+    confirmation_page.hidden = true;
     afficher();
   }
-    else if(selectedConfig.etape === 2){
-        vehicule_part.hidden = true;
-        recuperation_part.hidden = false;
-        options_part.hidden = true;
-        recapitulatif_part.hidden = true;
-
-        one.textContent = "✓";
-        two.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
-        recup_name.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
-    }
-    else if(selectedConfig.etape === 3){
-        vehicule_part.hidden = true;
-        recuperation_part.hidden = true;
-        options_part.hidden = false;
-        recapitulatif_part.hidden = true;
-
-        two.textContent = "✓";
-        three.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
-        opts_name.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
-    }
-    else if(selectedConfig.etape === 4){
-        vehicule_part.hidden = true;
-        recuperation_part.hidden = true;
-        options_part.hidden = true;
-        recapitulatif_part.hidden = false;
-
-        three.textContent = "✓";
-        four.className = "bg-[#2852E3] text-white flex items-center justify-center rounded-full h-[40px] w-[40px]";
-        recapitulatif.className = "text-[#2852E3] lg:py-3 lg:text-[13px]";
-    }
-    if(voiture_obj){
-        marque.textContent = `${voiture_obj.marque} ${voiture_obj.modele}`;
-        ctg_prix.textContent = `${voiture_obj.categorie} · ${voiture_obj.prixJour} MAD / jour`;
-    }
-
-    if(selectedConfig.dateDebut && selectedConfig.dateFin){
-        date.textContent = `${selectedConfig.dateDebut} → ${selectedConfig.dateFin}`;
-    }
-
-    if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin && selectedConfig.dateFin >= selectedConfig.dateDebut){
-        calculerJours();
-    }
+  else if(selectedConfig.etape === 2){
+      vehicule_part.hidden = true;
+      recuperation_part.hidden = false;
+      options_part.hidden = true;
+      recapitulatif_part.hidden = true;
+      confirmation_page.hidden = true;
+      afficher_recuperation();
+  }
+  else if(selectedConfig.etape === 3){
+      vehicule_part.hidden = true;
+      recuperation_part.hidden = true;
+      options_part.hidden = false;
+      recapitulatif_part.hidden = true;
+      confirmation_page.hidden = true; 
+  }
+  else if(selectedConfig.etape === 4){
+      vehicule_part.hidden = true;
+      recuperation_part.hidden = true;
+      options_part.hidden = true;
+      recapitulatif_part.hidden = false;
+      confirmation_page.hidden = true;
+  }
+  else if(selectedConfig.etape === 5){
+      vehicule_part.hidden = true;
+      recuperation_part.hidden = true;
+      options_part.hidden = true;
+      recapitulatif_part.hidden = true;
+      confirmation_page.hidden = false;
+  }
+  if(voiture_obj){
+    marque.textContent = `${voiture_obj.marque} ${voiture_obj.modele}`;
+    ctg_prix.textContent = `${voiture_obj.categorie} · ${voiture_obj.prixJour} MAD / jour`;
+  }
+  if(selectedConfig.dateDebut && selectedConfig.dateFin){
+      date.textContent = `${selectedConfig.dateDebut} → ${selectedConfig.dateFin}`;
+  }
+  if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin && selectedConfig.dateFin >= selectedConfig.dateDebut){
+      calculerJours();
+  }
 }
-function restaurer_recuperation(){
-    afficher_recuperation();
-
-    if(selectedConfig.recuperation.heureRecuperation){
-        heure_recuperation.value = selectedConfig.recuperation.heureRecuperation;
-    }
-    if(selectedConfig.recuperation.aeroport){
-        aeroport_select.value = selectedConfig.recuperation.aeroport;
-    }
-    if(selectedConfig.recuperation.numeroVol){
-        numero_vol.value = selectedConfig.recuperation.numeroVol;
-    }
-    if(selectedConfig.recuperation.heureArrivee){
-        heure_arrivee.value = selectedConfig.recuperation.heureArrivee;
-    }
-    if(selectedConfig.recuperation.ville){
-        ville.value = selectedConfig.recuperation.ville;
-    }
-    if(selectedConfig.recuperation.adresse){
-        adresse_input.value = selectedConfig.recuperation.adresse;
-    }
-    if(selectedConfig.recuperation.heureLivraison){
-        heure_livraison.value = selectedConfig.recuperation.heureLivraison;
-    }
-}
-restaurer_recuperation();
 afficher_perpage();
