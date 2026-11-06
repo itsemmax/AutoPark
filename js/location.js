@@ -313,8 +313,12 @@ function afficher(){
 }
 suivant_vhl.addEventListener("click",()=>{
     if(!voiture_obj){
-        alert("Veuillez sélectionner une voiture.");
-        return;
+      alert("Veuillez sélectionner une voiture.");
+      return;
+    }
+    if(voiture_obj.statut != "Disponible"){
+      alert("Veuillez sélectionner une voiture disponible.");
+      return;
     }
     if(!date_fin.value && !date_debut.value){
       erreur_date_debut.textContent = "Veuillez choisir une date de fin.";
