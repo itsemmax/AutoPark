@@ -57,6 +57,13 @@ let confirm = document.querySelector("#confirm");
 let nouvelle_loc = document.querySelector("#nouvelle_loc");
 let siege_bebe_checkbox = document.querySelector("#siege_bebe_checkbox");
 let conducteur_checkbox = document.querySelector("#conducteur_checkbox");
+let erreur_heure_recuperation = document.querySelector("#erreur-heure-recuperation");
+let erreur_aeroport = document.querySelector("#erreur-aeroport");
+let erreur_numero_vol = document.querySelector("#erreur-numero-vol");
+let erreur_heure_arrivee = document.querySelector("#erreur-heure-arrivee");
+let erreur_ville = document.querySelector("#erreur-ville");
+let erreur_adresse = document.querySelector("#erreur-adresse");
+let erreur_heure_livraison = document.querySelector("#erreur-heure-livraison");
 
 
 
@@ -267,7 +274,7 @@ function afficher(){
       if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin){
         calculerJours();
       }
-      
+
       document.querySelectorAll("#cards label").forEach((card)=>{
         card.className = "bg-[#FAFBFF] rounded-xl p-4 border-2 border-[#D8E1EF]";
       });
@@ -382,6 +389,13 @@ function reset_recuperation(){
     ville.value = "";
     adresse_input.value = "";
     heure_livraison.value = "";
+    supprimerErreur(heure_recuperation,erreur_heure_recuperation);
+    supprimerErreur(aeroport_select,erreur_aeroport);
+    supprimerErreur(numero_vol,erreur_numero_vol);
+    supprimerErreur(heure_arrivee,erreur_heure_arrivee);
+    supprimerErreur(ville,erreur_ville);
+    supprimerErreur(adresse_input,erreur_adresse);
+    supprimerErreur(heure_livraison,erreur_heure_livraison);
 }
 choix_agence.addEventListener("change",()=>{
   reset_recuperation();
@@ -489,31 +503,68 @@ precedent_recup.addEventListener("click",()=>{
   recup_name.className = "text-[#697C94] lg:py-3 lg:text-[13px]";
   afficher_perpage();
 })
-suivant_recup.addEventListener("click",(event)=>{
-  event.preventDefault();
+function afficherErreur(input,erreur,message){
+    input.style.borderColor = "red";
+    erreur.textContent = message;
+}
 
-  if(selectedConfig.modeRecuperation === "agence"){
-    if(!heure_recuperation.value){
-        alert("Veuillez choisir l'heure de récupération.");
-        return;
+function supprimerErreur(input,erreur){
+    input.style.borderColor = "";
+    erreur.textContent = "";
+}
+
+suivant_recup.addEventListener("click",()=>{
+    let valide = true;
+
+    if(selectedConfig.modeRecuperation === "agence"){
+      supprimerErreur(heure_recuperation,erreur_heure_recuperation);
+      if(!heure_recuperation.value){
+        afficherErreur(heure_recuperation,erreur_heure_recuperation,"Veuillez choisir une heure de récupération.");
+        valide = false;
+      }
     }
-  }
-  else if(selectedConfig.modeRecuperation === "aeroport"){
-    if(!aeroport_select.value || !numero_vol.value.trim() || !heure_arrivee.value){
-        alert("Veuillez remplir toutes les informations de l'aéroport.");
-        return;
+    else if(selectedConfig.modeRecuperation === "aeroport"){
+      supprimerErreur(aeroport_select,erreur_aeroport);
+      supprimerErreur(numero_vol,erreur_numero_vol);
+      supprimerErreur(heure_arrivee,erreur_heure_arrivee);
+
+      if(!aeroport_select.value){
+        afficherErreur(aeroport_select,erreur_aeroport,"Veuillez choisir un aéroport.");
+        valide = false;
+      }
+      if(!numero_vol.value.trim()){
+        afficherErreur(numero_vol,erreur_numero_vol,"Veuillez saisir le numéro du vol.");
+        valide = false;
+      }
+      if(!heure_arrivee.value){
+        afficherErreur(heure_arrivee,erreur_heure_arrivee,"Veuillez choisir une heure d'arrivée.");
+        valide = false;
+      }
     }
+    else if(selectedConfig.modeRecuperation === "adresse"){
+        supprimerErreur(ville,erreur_ville);
+        supprimerErreur(adresse_input,erreur_adresse);
+        supprimerErreur(heure_livraison,erreur_heure_livraison);
+
+      if(!ville.value.trim()){
+        afficherErreur(ville,erreur_ville,"Veuillez saisir une ville.");
+        valide = false;
+      }
+      if(!adresse_input.value.trim()){
+        afficherErreur(adresse_input,erreur_adresse,"Veuillez saisir une adresse complète.");
+        valide = false;
+      }
+      if(!heure_livraison.value){
+        afficherErreur(heure_livraison,erreur_heure_livraison,"Veuillez choisir une heure de livraison.");
+        valide = false;
+      }
   }
-  else if(selectedConfig.modeRecuperation === "adresse"){
-    if(!ville.value.trim() || !adresse_input.value.trim() || !heure_livraison.value){
-        alert("Veuillez remplir toutes les informations de livraison.");
-        return;
-    }
-  }
+  if(!valide) return;
   selectedConfig.etape = 3;
   sessionStorage.setItem("location",JSON.stringify(selectedConfig));
   afficher_perpage();
 });
+
 siege_bebe_checkbox.addEventListener("change",()=>{
     let checked = siege_bebe_checkbox.querySelector("input").checked;
     selectedConfig.options.siegeBebe = checked;
