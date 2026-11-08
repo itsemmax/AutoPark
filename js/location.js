@@ -433,6 +433,7 @@ choix_aeroport.addEventListener("change",()=>{
   if(voiture_obj && selectedConfig.dateDebut && selectedConfig.dateFin && selectedConfig.dateFin >= selectedConfig.dateDebut){
     calculerJours();
   }
+  
 })
 choix_adresse.addEventListener("change",()=>{
   reset_recuperation();
