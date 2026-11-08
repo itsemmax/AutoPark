@@ -1,153 +1,279 @@
-# 🚗 AutoPark — Gestion d’un parc automobile
 
-AutoPark est une application web de gestion d’un parc automobile réalisée dans le cadre d’un projet individuel à **Simplon / YouCode**.
+# 🚗 AutoPark — Configurateur de location
 
-L’application permet à une agence fictive de location de voitures, **Atlas Auto**, de gérer ses véhicules, leurs tarifs et leur disponibilité à travers une interface simple et responsive.
+AutoPark — Configurateur de location est une application web développée dans le cadre d'un projet individuel à **Simplon / YouCode**.
 
-Le projet fonctionne entièrement côté frontend, sans backend ni base de données. Les données sont sauvegardées dans le navigateur grâce à `localStorage`.
+Ce projet représente la deuxième partie d'AutoPark, une application destinée à **Atlas Auto**, une agence fictive de location de voitures.
+
+Après avoir développé une interface de gestion du parc automobile, cette nouvelle partie permet aux clients de configurer leur location en sélectionnant un véhicule, une période de location, un mode de récupération et des options supplémentaires.
+
+Le montant total est calculé automatiquement en fonction des choix effectués.
+
+L'application fonctionne entièrement côté **frontend**, sans backend ni base de données.
 
 ---
 
 ## 📸 Aperçu du projet
 
-### Dashboard
+### Configurateur de location
 
-![Dashboard AutoPark](./assets/images/dashboard.png)
+![Configurateur AutoPark](./assets/images/location.png)
 
-Le dashboard permet de visualiser rapidement :
+Le configurateur permet aux utilisateurs de personnaliser leur location à travers plusieurs étapes.
 
-- le nombre total de voitures ;
-- les voitures disponibles ;
-- les voitures louées ;
-- les voitures en maintenance ;
-- les 5 dernières voitures ajoutées.
+### Sélection du véhicule
 
-### Gestion du parc
+![Sélection du véhicule](./assets/images/vehicule.png)
 
-![Gestion du parc AutoPark](./assets/images/gestion-parc.png)
+L'utilisateur peut consulter les véhicules du parc, sélectionner une voiture et choisir les dates de location.
 
-La page de gestion permet d'ajouter, modifier, supprimer, rechercher, filtrer et trier les voitures du parc.
+### Mode de récupération
+
+![Mode de récupération](./assets/images/recuperation.png)
+
+Le formulaire s'adapte au mode de récupération sélectionné.
+
+### Options supplémentaires
+
+![Options de location](./assets/images/options.png)
+
+L'utilisateur peut ajouter un siège bébé ou un conducteur supplémentaire.
+
+### Récapitulatif
+
+![Récapitulatif de location](./assets/images/recapitulatif.png)
+
+Cette page permet de vérifier les informations de location avant la confirmation.
 
 ---
 
 ## 🎯 Objectif du projet
 
-L’objectif principal est de développer une application web permettant de gérer les voitures d’une agence de location en utilisant **JavaScript Vanilla ES6+**.
+L'objectif principal est de développer un configurateur de location dynamique avec **JavaScript Vanilla ES6+**.
 
 Ce projet permet notamment de pratiquer :
 
 - la manipulation du DOM ;
-- les événements JavaScript ;
-- les tableaux d’objets ;
-- les opérations CRUD ;
-- la validation des formulaires ;
-- les méthodes `filter()`, `find()`, `some()`, `sort()`... ;
-- les modules ES6 avec `import` / `export` ;
-- la sauvegarde des données avec `localStorage` ;
-- la création d’une interface responsive.
+- la gestion des événements JavaScript ;
+- les formulaires dynamiques ;
+- la validation des champs ;
+- la navigation entre plusieurs étapes ;
+- le calcul dynamique des prix ;
+- la manipulation des tableaux d'objets ;
+- l'utilisation de `localStorage` et `sessionStorage` ;
+- la sauvegarde et la restauration des données ;
+- les modules JavaScript ES6 ;
+- le responsive design avec Tailwind CSS ;
+- la gestion de projet avec GitFlow et Jira.
 
 ---
 
 ## ✨ Fonctionnalités
 
-### Gestion des voitures
+### 🚘 Sélection du véhicule
 
-L’utilisateur peut :
+L'utilisateur peut :
 
-- afficher dynamiquement les voitures du parc ;
-- ajouter une nouvelle voiture ;
-- modifier une voiture existante ;
-- annuler une modification ;
-- supprimer une voiture après confirmation ;
-- conserver un identifiant pour chaque voiture.
+- consulter les voitures enregistrées dans le parc AutoPark ;
+- afficher la marque, le modèle, la catégorie et le prix journalier ;
+- sélectionner un véhicule ;
+- consulter son statut ;
+- choisir les dates de début et de fin de location.
 
-Chaque voiture contient :
+Les véhicules sont récupérés depuis `localStorage`.
 
-- une marque ;
-- un modèle ;
-- une immatriculation ;
-- une catégorie ;
-- un prix journalier ;
-- un statut.
+Si aucune donnée n'est enregistrée, les données initiales du fichier `data.js` sont utilisées.
 
-### Validation du formulaire
+### 📅 Gestion des dates
 
-Le formulaire vérifie notamment :
+Le configurateur vérifie :
 
-- les champs obligatoires ;
-- la marque et le modèle ;
-- le format de l’immatriculation `AUTO-XXX` ;
-- l’unicité de l’immatriculation ;
-- la catégorie ;
-- le prix journalier.
+- qu'un véhicule a été sélectionné ;
+- que le véhicule est disponible ;
+- que la date de début est renseignée ;
+- que la date de fin est renseignée ;
+- que la date de début n'est pas passée ;
+- que la date de fin n'est pas antérieure à la date de début.
 
-Les erreurs sont affichées directement près des champs concernés.
+Les dates de début et de fin sont incluses dans la durée.
 
-### Recherche et filtres
+**Exemple :**
 
-Il est possible de rechercher une voiture par :
+Une location du 10 au 12 novembre représente **3 jours**.
 
-- marque ;
-- modèle ;
-- immatriculation.
+### 📍 Modes de récupération
 
-L’utilisateur peut également filtrer les voitures par :
+L'utilisateur peut choisir entre trois modes de récupération.
 
-- statut ;
-- catégorie.
+| Mode | Informations demandées | Supplément |
+|---|---|---|
+| À l'agence | Heure de récupération | Gratuit |
+| À l'aéroport | Aéroport, numéro de vol et heure d'arrivée | 150 MAD |
+| À une adresse | Ville, adresse complète et heure de livraison | 100 MAD |
 
-Les voitures peuvent être triées selon leur prix :
+Le formulaire change dynamiquement selon le mode sélectionné.
 
-- prix croissant ;
-- prix décroissant.
+Les champs correspondant aux autres modes sont masqués.
 
-Un bouton permet également de réinitialiser tous les critères.
+Les frais de récupération sont ajoutés une seule fois au montant total.
 
-### Persistance des données
+### ➕ Options supplémentaires
 
-Les voitures sont sauvegardées dans le navigateur avec :
+Deux options facultatives sont proposées :
 
-```javascript
-localStorage
+| Option | Prix |
+|---|---|
+| Siège bébé | 30 MAD / jour |
+| Conducteur supplémentaire | 200 MAD / jour |
+
+L'utilisateur peut sélectionner :
+
+- aucune option ;
+- une seule option ;
+- les deux options.
+
+Le montant total est actualisé automatiquement après chaque modification.
+
+### 💰 Calcul dynamique du prix
+
+Le prix total dépend :
+
+- du tarif journalier du véhicule ;
+- du nombre de jours ;
+- des options supplémentaires ;
+- du mode de récupération.
+
+**Formule :**
+
+```text
+Total = Nombre de jours × (Prix du véhicule / jour
+        + Prix des options / jour)
+        + Frais de récupération
 ```
 
-Les données sont transformées grâce à :
+**Exemple :**
+
+Location d'une Dacia Sandero :
+
+```text
+Véhicule : Dacia Sandero
+Prix journalier : 250 MAD
+
+Durée : 3 jours
+
+Option : Siège bébé
+Prix : 30 MAD / jour
+
+Récupération : Aéroport
+Frais : 150 MAD
+
+Calcul :
+3 × (250 + 30) + 150
+
+Total : 990 MAD
+```
+
+Le récapitulatif du prix est actualisé selon les choix effectués.
+
+### 🔄 Navigation entre les étapes
+
+Le configurateur utilise un parcours en plusieurs étapes :
+
+1. Véhicule et dates
+2. Récupération
+3. Options
+4. Récapitulatif
+5. Confirmation de la demande
+
+Une seule étape est affichée à la fois.
+
+L'utilisateur peut :
+
+- passer à l'étape suivante ;
+- revenir à l'étape précédente ;
+- conserver les informations déjà saisies ;
+- visualiser sa progression ;
+- modifier ses choix depuis le récapitulatif.
+
+### 📝 Validation des formulaires
+
+Les informations sont vérifiées avant le passage à l'étape suivante.
+
+Les contrôles portent notamment sur :
+
+- la sélection d'un véhicule ;
+- la disponibilité du véhicule ;
+- les dates de location ;
+- l'heure de récupération ;
+- le choix de l'aéroport ;
+- le numéro du vol ;
+- l'heure d'arrivée ;
+- la ville ;
+- l'adresse de livraison ;
+- l'heure de livraison.
+
+Des messages d'erreur sont affichés près des champs concernés.
+
+### 📋 Récapitulatif de location
+
+Avant la confirmation, l'utilisateur peut consulter :
+
+- le véhicule sélectionné ;
+- le tarif journalier ;
+- les dates de location ;
+- la durée ;
+- le mode de récupération ;
+- les informations de récupération ;
+- les options sélectionnées ;
+- le montant total estimé.
+
+Des boutons **Modifier** permettent de revenir aux étapes précédentes sans perdre les informations.
+
+### ✅ Confirmation de la demande
+
+Une fois les informations vérifiées, l'utilisateur peut confirmer sa demande.
+
+Une page de confirmation est affichée avec un message de réussite.
+
+L'utilisateur peut ensuite commencer une nouvelle location.
+
+La confirmation est simulée côté navigateur, sans paiement en ligne.
+
+### 💾 Persistance des données
+
+Les véhicules du parc sont stockés dans `localStorage`.
+
+La configuration de location est conservée dans `sessionStorage` sous la clé :
+
+```javascript
+"location"
+```
+
+Les données sont enregistrées et récupérées grâce à :
 
 ```javascript
 JSON.stringify()
 JSON.parse()
 ```
 
-Ainsi, les modifications restent disponibles après le rechargement de la page.
-
-### Dashboard
-
-Le dashboard utilise les mêmes données enregistrées dans `localStorage`.
-
-Il affiche quatre indicateurs principaux :
-
-| Indicateur | Description |
-|---|---|
-| Total | Nombre total de voitures |
-| Disponibles | Voitures disponibles à la location |
-| Louées | Voitures actuellement louées |
-| En maintenance | Voitures temporairement indisponibles |
-
-Une section affiche également les **5 dernières voitures ajoutées** au parc.
+Les choix sont restaurés après un rafraîchissement de la page dans la même session.
 
 ---
 
 ## 🛠️ Technologies utilisées
 
 - **HTML5** — structure des pages
-- **CSS3** — mise en forme de la page de gestion
-- **Tailwind CSS** — interface du dashboard
-- **JavaScript ES6+** — logique de l’application
-- **DOM** — manipulation dynamique de l’interface
-- **localStorage** — persistance des données
+- **Tailwind CSS** — design et responsive
+- **JavaScript ES6+** — logique du configurateur
+- **DOM** — manipulation dynamique des éléments
+- **localStorage** — stockage des véhicules
+- **sessionStorage** — sauvegarde de la configuration
 - **Git** — gestion des versions
 - **GitHub** — hébergement du code source
-- **Jira** — organisation et suivi des tâches
+- **GitFlow** — organisation des branches
+- **Jira** — planification et suivi des tâches
+- **Figma** — conception des maquettes
+- **Vercel** — déploiement de l'application
 
 ---
 
@@ -158,6 +284,7 @@ AutoPark/
 │
 ├── index.html
 ├── voitures.html
+├── location.html
 │
 ├── css/
 │   └── style.css
@@ -165,12 +292,18 @@ AutoPark/
 ├── js/
 │   ├── data.js
 │   ├── voitures.js
-│   └── dashboard.js
+│   ├── dashboard.js
+│   └── location.js
 │
 ├── assets/
 │   └── images/
 │       ├── dashboard.png
 │       ├── gestion-parc.png
+│       ├── location.png
+│       ├── vehicule.png
+│       ├── recuperation.png
+│       ├── options.png
+│       ├── recapitulatif.png
 │       └── jira.png
 │
 └── README.md
@@ -178,26 +311,50 @@ AutoPark/
 
 ### Rôle des fichiers
 
-**`index.html`**  
-Contient l’interface du dashboard.
+**`index.html`**
 
-**`voitures.html`**  
-Contient l’interface principale de gestion du parc automobile.
+Contient le dashboard de gestion du parc automobile.
 
-**`data.js`**  
-Contient les données initiales des voitures fournies au démarrage du projet.
+**`voitures.html`**
 
-**`voitures.js`**  
-Contient la logique principale de gestion : affichage, ajout, modification, suppression, validation, recherche, filtres, tri et `localStorage`.
+Contient l'interface de gestion des voitures.
 
-**`dashboard.js`**  
-Récupère les données du `localStorage`, calcule les différents compteurs et affiche les dernières voitures ajoutées.
+**`location.html`**
+
+Contient l'interface du configurateur de location.
+
+**`data.js`**
+
+Contient les données initiales des véhicules.
+
+**`voitures.js`**
+
+Gère les opérations CRUD sur les voitures du parc.
+
+**`dashboard.js`**
+
+Affiche les statistiques et les indicateurs du parc automobile.
+
+**`location.js`**
+
+Contient la logique du configurateur :
+
+- affichage des véhicules ;
+- sélection des dates ;
+- gestion des étapes ;
+- formulaire dynamique de récupération ;
+- sélection des options ;
+- validation des champs ;
+- calcul du prix ;
+- récapitulatif ;
+- confirmation ;
+- sauvegarde de la configuration.
 
 ---
 
-## 💾 Données
+## 💾 Gestion des données
 
-Les données initiales sont représentées sous forme d’un tableau d’objets JavaScript.
+Les voitures sont représentées sous forme d'un tableau d'objets JavaScript.
 
 Exemple :
 
@@ -213,57 +370,93 @@ Exemple :
 }
 ```
 
-Au premier lancement, les données initiales sont enregistrées dans `localStorage`.
+Les véhicules sont récupérés depuis `localStorage`.
 
-Les opérations suivantes utilisent ensuite les données sauvegardées :
+```javascript
+if (!localStorage.getItem("voitures")) {
+    localStorage.setItem(
+        "voitures",
+        JSON.stringify(voituresInitiales)
+    );
+}
 
-```text
-Ajouter
-   ↓
-Modifier
-   ↓
-Supprimer
-   ↓
-localStorage
-   ↓
-Dashboard
+let voitures = JSON.parse(
+    localStorage.getItem("voitures")
+);
 ```
+
+Les choix de l'utilisateur sont conservés dans un objet `selectedConfig`.
+
+Cet objet contient notamment :
+
+- l'étape actuelle ;
+- l'identifiant du véhicule ;
+- les dates de location ;
+- le mode de récupération ;
+- les informations de récupération ;
+- les options sélectionnées.
 
 ---
 
-## 🔄 Opérations CRUD
+## 🔀 Organisation avec GitFlow
 
-| Opération | Fonction |
-|---|---|
-| Create | Ajouter une voiture |
-| Read | Afficher les voitures |
-| Update | Modifier une voiture |
-| Delete | Supprimer une voiture |
+Le développement du projet est organisé avec GitFlow.
 
-Toutes les opérations sont réalisées dynamiquement en JavaScript sans rechargement de la page.
+### Branches principales
+
+- `main` : version stable du projet
+- `develop` : branche d'intégration des fonctionnalités
+
+### Branches de fonctionnalités
+
+Exemples :
+
+```text
+feature/layout
+feature/vehicle-selection
+feature/date-validation
+feature/dynamic-form
+feature/price-calculation
+feature/navigation
+feature/recap
+feature/storage
+feature/responsive
+```
+
+Les fonctionnalités sont développées dans des branches dédiées avant leur intégration par Pull Requests.
 
 ---
 
 ## 📊 Organisation avec Jira
 
-Le projet a été organisé avec **Jira** afin de découper le développement en différentes tâches et de suivre leur état d’avancement.
+Le projet est organisé avec **Jira** pour suivre les différentes tâches de développement.
 
-![Tableau Jira AutoPark](./assets/images/jira.png)
+![Tableau Jira AutoPark](./assets/images/jira2.png)
 
-Les tâches ont été réparties entre différentes étapes :
+Les tâches sont réparties entre :
 
-- analyse du brief ;
-- initialisation du projet ;
-- affichage dynamique des voitures ;
-- développement du CRUD ;
-- validation du formulaire ;
-- gestion du `localStorage` ;
-- recherche et filtres ;
-- tri des voitures ;
-- création du dashboard ;
+- planification et initialisation ;
+- structure HTML ;
+- intégration Tailwind CSS ;
+- affichage des véhicules ;
+- sélection et validation des dates ;
+- navigation entre les étapes ;
+- formulaire dynamique de récupération ;
+- options supplémentaires ;
+- calcul du prix ;
+- récapitulatif ;
+- sauvegarde des données ;
+- confirmation ;
 - responsive design ;
 - tests et corrections ;
-- documentation et livraison.
+- documentation et déploiement.
+
+Les statuts utilisés sont :
+
+- À faire
+- En cours
+- En revue
+- Terminé
 
 ---
 
@@ -272,7 +465,7 @@ Les tâches ont été réparties entre différentes étapes :
 ### 1. Cloner le dépôt
 
 ```bash
-git clone <URL-DU-DEPOT>
+git clone https://github.com/itsemmax/AutoPark.git
 ```
 
 ### 2. Accéder au projet
@@ -283,23 +476,29 @@ cd AutoPark
 
 ### 3. Lancer un serveur local
 
-Le projet utilise les modules ES6, il est donc recommandé de l’exécuter avec un serveur local.
+Le projet utilise des modules JavaScript ES6.
 
-Avec VS Code, vous pouvez par exemple utiliser **Live Server**.
+Il est recommandé de lancer l'application avec un serveur local, par exemple **Live Server** dans Visual Studio Code.
 
-Puis ouvrir :
+### 4. Ouvrir l'application
 
 ```text
 index.html
 ```
 
-pour accéder au dashboard, ou :
+Pour accéder au dashboard.
 
 ```text
 voitures.html
 ```
 
-pour accéder à la gestion du parc.
+Pour accéder à la gestion du parc.
+
+```text
+location.html
+```
+
+Pour accéder au configurateur de location.
 
 ---
 
@@ -313,39 +512,49 @@ Le projet contient deux pages principales :
 
 - **Dashboard :** `index.html`
 - **Gestion du parc :** `voitures.html`
+- **Location :** `location.html`
 
 🔗 **Dépôt GitHub :** [(https://github.com/itsemmax/AutoPark)]
 ---
 
 ## 📱 Responsive Design
 
-L’application est conçue pour rester utilisable sur différents écrans :
+L'interface est conçue pour s'adapter aux différents formats d'écran :
 
 - 📱 Mobile
 - 📱 Tablette
 - 💻 Desktop
 
-Le dashboard utilise notamment une grille responsive afin d’adapter les indicateurs à la largeur de l’écran.
+Tailwind CSS permet d'adapter :
+
+- la disposition des véhicules ;
+- les formulaires ;
+- les cartes de récupération ;
+- les boutons de navigation ;
+- le récapitulatif du prix ;
+- les espacements et les tailles des éléments.
 
 ---
 
 ## 🧠 Compétences développées
 
-Ce projet m’a permis de pratiquer et renforcer :
+Ce projet m'a permis de pratiquer et de renforcer :
 
-- JavaScript ES6+ ;
+- JavaScript Vanilla ES6+ ;
 - manipulation du DOM ;
-- gestion des événements avec `addEventListener()` ;
-- utilisation de `preventDefault()` ;
-- manipulation de tableaux d’objets ;
-- validation de formulaires ;
-- opérations CRUD ;
-- utilisation de `find()`, `filter()`, `some()` et `sort()` ;
-- gestion de `localStorage` ;
-- utilisation de `JSON.stringify()` et `JSON.parse()` ;
-- modules JavaScript avec `import` / `export` ;
-- responsive design ;
-- Git et GitHub ;
+- événements avec `addEventListener()` ;
+- gestion des formulaires dynamiques ;
+- validation des données ;
+- navigation multi-étapes ;
+- gestion d'un état avec des objets JavaScript ;
+- calcul dynamique des prix ;
+- utilisation de `find()` et `forEach()` ;
+- sauvegarde avec `JSON.stringify()` ;
+- restauration avec `JSON.parse()` ;
+- utilisation de `localStorage` et `sessionStorage` ;
+- modules ES6 ;
+- responsive design avec Tailwind CSS ;
+- GitFlow et Pull Requests ;
 - organisation des tâches avec Jira.
 
 ---
@@ -354,7 +563,10 @@ Ce projet m’a permis de pratiquer et renforcer :
 
 Projet réalisé individuellement dans le cadre de la formation **Développeur Web et Web Mobile**.
 
-**Projet :** AutoPark — Gestion d’un parc automobile  
-**Contexte :** Simplon / YouCode  
-**Durée :** 5 jours  
-**Date :** Octobre 2026
+**Projet :** AutoPark — Configurateur de location
+
+**Contexte :** Simplon / YouCode
+
+**Durée :** 4 jours
+
+**Date :** Novembre 2026
